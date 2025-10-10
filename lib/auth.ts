@@ -21,7 +21,8 @@ const WordPressProvider = {
     url: "https://public-api.wordpress.com/oauth2/token",
   },
   userinfo: {
-    url: "https://public-api.wordpress.com/rest/v1/me",
+    // Request explicit fields; email may be omitted otherwise for some accounts
+    url: "https://public-api.wordpress.com/rest/v1/me?fields=ID,display_name,username,avatar_URL,email",
   },
   clientId: process.env.WORDPRESS_CLIENT_ID,
   clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
@@ -110,7 +111,20 @@ export const authOptions: NextAuthOptions = {
 
         // For OAuth providers (WordPress, GitHub), check if user exists or create new user
         if (account?.provider === "wordpress" || account?.provider === "github") {
-          const email = user.email;
+          // Ensure we have an email; WordPress.com may not always return one
+          let email = user.email as string | undefined;
+          if (account?.provider === "wordpress" && !email) {
+            const providerId = (account?.providerAccountId || profile?.ID || profile?.id)?.toString?.();
+            const base = (profile?.username || profile?.display_name || "wpuser")
+              .toString()
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, ".")
+              .replace(/^\.|\.$/g, "")
+              .slice(0, 30) || "wpuser";
+            email = providerId ? `${base}.${providerId}@users.wordpress.com` : `${base}.${Math.random().toString(36).slice(2,8)}@users.wordpress.com`;
+            console.warn("⚠️ WordPress returned no email; using placeholder:", email);
+            user.email = email;
+          }
           if (!email) {
             console.error("❌ No email provided by OAuth provider");
             return false;
