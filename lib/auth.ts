@@ -146,7 +146,7 @@ export const authOptions: NextAuthOptions = {
       }) as any;
       google.token = {
         async request(context: any) {
-          const { provider, params } = context;
+          const { provider, params, checks } = context;
           const body = new URLSearchParams();
           body.set("grant_type", (params?.grant_type as string) || "authorization_code");
           if (params?.code) body.set("code", String(params.code));
@@ -154,7 +154,8 @@ export const authOptions: NextAuthOptions = {
           body.set("redirect_uri", redirectUri);
           body.set("client_id", String(provider.clientId));
           body.set("client_secret", String(provider.clientSecret));
-          if (params?.code_verifier) body.set("code_verifier", String((params as any).code_verifier));
+          const verifier = (params as any)?.code_verifier || checks?.code_verifier;
+          if (verifier) body.set("code_verifier", String(verifier));
 
           const res = await fetch("https://oauth2.googleapis.com/token", {
             method: "POST",
@@ -170,6 +171,7 @@ export const authOptions: NextAuthOptions = {
               has_client_id: Boolean(provider?.clientId),
               has_client_secret: Boolean(provider?.clientSecret),
               grant_type: body.get("grant_type"),
+              has_code_verifier: Boolean(verifier),
             });
             throw new Error(`Google token exchange failed: ${res.status}`);
           }

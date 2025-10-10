@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SidebarLayout } from "@/components/dashboard/sidebar-layout";
-import { User, Lock, Bell, CreditCard, Shield, Loader2 } from "lucide-react";
+import { User, Lock, Bell, CreditCard, Shield, Loader2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 export default function SettingsPage() {
@@ -20,6 +20,9 @@ export default function SettingsPage() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [twoFASecret, setTwoFASecret] = useState<string | null>(null);
   const [twoFAUrl, setTwoFAUrl] = useState<string | null>(null);
@@ -314,15 +317,30 @@ export default function SettingsPage() {
                   <div className="grid gap-3 sm:grid-cols-3">
                     <div className="space-y-1">
                       <Label htmlFor="oldPassword">Current Password</Label>
-                      <Input id="oldPassword" type="password" value={oldPassword} onChange={e=>setOldPassword(e.target.value)} />
+                      <div className="relative">
+                        <Input id="oldPassword" type={showOld ? "text" : "password"} value={oldPassword} onChange={e=>setOldPassword(e.target.value)} />
+                        <button type="button" onClick={()=>setShowOld(v=>!v)} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label={showOld?"Hide password":"Show password"}>
+                          {showOld ? <EyeOff className="h-4 w-4"/> : <Eye className="h-4 w-4"/>}
+                        </button>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="newPassword">New Password</Label>
-                      <Input id="newPassword" type="password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} />
+                      <div className="relative">
+                        <Input id="newPassword" type={showNew ? "text" : "password"} value={newPassword} onChange={e=>setNewPassword(e.target.value)} />
+                        <button type="button" onClick={()=>setShowNew(v=>!v)} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label={showNew?"Hide password":"Show password"}>
+                          {showNew ? <EyeOff className="h-4 w-4"/> : <Eye className="h-4 w-4"/>}
+                        </button>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                      <Input id="confirmPassword" type="password" value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} />
+                      <div className="relative">
+                        <Input id="confirmPassword" type={showConfirm ? "text" : "password"} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} />
+                        <button type="button" onClick={()=>setShowConfirm(v=>!v)} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label={showConfirm?"Hide password":"Show password"}>
+                          {showConfirm ? <EyeOff className="h-4 w-4"/> : <Eye className="h-4 w-4"/>}
+                        </button>
+                      </div>
                     </div>
                     <div className="sm:col-span-3">
                       <Button onClick={handleChangePassword} disabled={isChangingPassword}>
@@ -404,32 +422,7 @@ export default function SettingsPage() {
                   </div>
                 )}
               </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">Security alerts</p>
-                  <p className="text-sm text-muted-foreground">Get notified about security issues</p>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => handleNotificationSettings("Security")}
-                >
-                  Configure
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">Marketing emails</p>
-                  <p className="text-sm text-muted-foreground">Product updates and offers</p>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => handleNotificationSettings("Marketing")}
-                >
-                  Configure
-                </Button>
-              </div>
+              
             </CardContent>
           </Card>
 
