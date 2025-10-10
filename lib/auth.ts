@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import { compare } from "bcryptjs";
 import { sql } from '@vercel/postgres';
 
@@ -130,6 +131,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     WordPressProvider,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
@@ -157,7 +162,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // For OAuth providers (WordPress, GitHub), check if user exists or create new user
-        if (account?.provider === "wordpress" || account?.provider === "github") {
+        if (account?.provider === "wordpress" || account?.provider === "github" || account?.provider === "google") {
           // Ensure we have an email; WordPress.com may not always return one
           let email = user.email as string | undefined;
           if (account?.provider === "wordpress" && !email) {
@@ -170,6 +175,18 @@ export const authOptions: NextAuthOptions = {
               .slice(0, 30) || "wpuser";
             email = providerId ? `${base}.${providerId}@users.wordpress.com` : `${base}.${Math.random().toString(36).slice(2,8)}@users.wordpress.com`;
             console.warn("⚠️ WordPress returned no email; using placeholder:", email);
+            user.email = email;
+          }
+          if (account?.provider === "google" && !email) {
+            const providerId = (account?.providerAccountId || profile?.sub || profile?.id)?.toString?.();
+            const base = (profile?.name || profile?.given_name || "googleuser")
+              .toString()
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, ".")
+              .replace(/^\.|\.$/g, "")
+              .slice(0, 30) || "googleuser";
+            email = providerId ? `${base}.${providerId}@users.google.com` : `${base}.${Math.random().toString(36).slice(2,8)}@users.google.com`;
+            console.warn("⚠️ Google returned no email; using placeholder:", email);
             user.email = email;
           }
           if (!email) {

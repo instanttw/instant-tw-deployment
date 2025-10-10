@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Github, Loader2 } from "lucide-react";
 import { WordPressIcon } from "@/components/icons/wordpress-icon";
+import { GoogleIcon } from "@/components/icons/google-icon";
 
 function LoginForm() {
   const router = useRouter();
@@ -46,7 +47,7 @@ function LoginForm() {
     }
   };
 
-  const handleSocialLogin = async (provider: "wordpress" | "github") => {
+  const handleSocialLogin = async (provider: "wordpress" | "github" | "google") => {
     setIsLoading(true);
     try {
       await signIn(provider, { callbackUrl });
@@ -143,6 +144,17 @@ function LoginForm() {
               <Github className="mr-2 h-4 w-4" />
               GitHub
             </Button>
+            <div className="col-span-2 flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => handleSocialLogin("google")}
+                disabled={isLoading}
+                className="mt-1"
+              >
+                <GoogleIcon className="mr-2 h-4 w-4" />
+                Google
+              </Button>
+            </div>
           </div>
 
           <div className="text-center text-sm">
