@@ -131,10 +131,55 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     WordPressProvider,
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_SECRET || "",
-    }),
+    // Google Provider with explicit token POST body to avoid client_secret issues
+    (() => {
+      const google = GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID || "",
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_SECRET || "",
+        authorization: {
+          params: {
+            prompt: "consent",
+            access_type: "offline",
+            response_type: "code",
+          },
+        },
+      }) as any;
+      google.token = {
+        async request(context: any) {
+          const { provider, params } = context;
+          const body = new URLSearchParams();
+          body.set("grant_type", (params?.grant_type as string) || "authorization_code");
+          if (params?.code) body.set("code", String(params.code));
+          const redirectUri = (params?.redirect_uri as string) || `${process.env.NEXTAUTH_URL}/api/auth/callback/${provider.id}`;
+          body.set("redirect_uri", redirectUri);
+          body.set("client_id", String(provider.clientId));
+          body.set("client_secret", String(provider.clientSecret));
+          if (params?.code_verifier) body.set("code_verifier", String((params as any).code_verifier));
+
+          const res = await fetch("https://oauth2.googleapis.com/token", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body,
+          });
+
+          if (!res.ok) {
+            const text = await res.text();
+            console.error("❌ Google token error:", res.status, text.substring(0, 500), {
+              has_code: Boolean(params?.code),
+              has_redirect_uri: Boolean(redirectUri),
+              has_client_id: Boolean(provider?.clientId),
+              has_client_secret: Boolean(provider?.clientSecret),
+              grant_type: body.get("grant_type"),
+            });
+            throw new Error(`Google token exchange failed: ${res.status}`);
+          }
+
+          const tokens = await res.json();
+          return { tokens } as any;
+        },
+      };
+      return google;
+    })(),
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
