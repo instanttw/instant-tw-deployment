@@ -24,11 +24,15 @@ const WordPressProvider = {
     // WordPress expects client_id and client_secret in POST body (not Basic Auth)
     async request(context: any) {
       const { provider, params } = context;
-      const body = new URLSearchParams({
-        ...params,
-        client_id: provider.clientId as string,
-        client_secret: provider.clientSecret as string,
-      } as Record<string, string>);
+      const body = new URLSearchParams();
+      body.set("grant_type", (params?.grant_type as string) || "authorization_code");
+      if (params?.code) body.set("code", String(params.code));
+      // Prefer the redirect_uri passed by NextAuth; otherwise, compose it
+      const redirectUri = (params?.redirect_uri as string) || `${process.env.NEXTAUTH_URL}/api/auth/callback/${provider.id}`;
+      body.set("redirect_uri", redirectUri);
+      body.set("client_id", String(provider.clientId));
+      body.set("client_secret", String(provider.clientSecret));
+      if (params?.code_verifier) body.set("code_verifier", String((params as any).code_verifier));
 
       const res = await fetch("https://public-api.wordpress.com/oauth2/token", {
         method: "POST",
@@ -38,7 +42,12 @@ const WordPressProvider = {
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("❌ WordPress token error:", res.status, text);
+        console.error("❌ WordPress token error:", res.status, text.substring(0, 500), {
+          has_code: Boolean(params?.code),
+          has_redirect_uri: Boolean(redirectUri),
+          has_client_id: Boolean(provider?.clientId),
+          grant_type: body.get("grant_type"),
+        });
         throw new Error(`WordPress token exchange failed: ${res.status}`);
       }
 
