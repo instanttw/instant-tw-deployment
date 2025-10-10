@@ -16,16 +16,21 @@ const WordPressProvider = {
       response_type: "code",
     },
   },
-  token: "https://public-api.wordpress.com/oauth2/token",
-  userinfo: "https://public-api.wordpress.com/rest/v1/me",
+  // Use object form to avoid NextAuth parsing issues
+  token: {
+    url: "https://public-api.wordpress.com/oauth2/token",
+  },
+  userinfo: {
+    url: "https://public-api.wordpress.com/rest/v1/me",
+  },
   clientId: process.env.WORDPRESS_CLIENT_ID,
   clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
   profile(profile: any) {
     return {
-      id: profile.ID.toString(),
-      name: profile.display_name || profile.username,
-      email: profile.email,
-      image: profile.avatar_URL,
+      id: profile?.ID?.toString?.() || profile?.id?.toString?.(),
+      name: profile?.display_name || profile?.username || null,
+      email: profile?.email || null,
+      image: profile?.avatar_URL || profile?.avatar_url || null,
     };
   },
 };
@@ -187,7 +192,9 @@ export const authOptions: NextAuthOptions = {
               message: dbError instanceof Error ? dbError.message : 'Unknown',
               stack: dbError instanceof Error ? dbError.stack : undefined,
             });
-            return false;
+            // Allow login even if DB write fails to avoid OAuthCallback loop
+            // The session will still contain the OAuth user details
+            return true;
           }
         }
 
