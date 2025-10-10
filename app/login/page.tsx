@@ -131,7 +131,7 @@ function LoginForm() {
               variant="outline"
               onClick={() => handleSocialLogin("wordpress")}
               disabled={isLoading}
-              className="hover:bg-[#21759b]/10 hover:text-[#21759b] hover:border-[#21759b]"
+              className="w-full hover:bg-[#21759b]/10 hover:text-[#21759b] hover:border-[#21759b]"
             >
               <WordPressIcon className="mr-2 h-4 w-4" />
               WordPress
@@ -140,6 +140,7 @@ function LoginForm() {
               variant="outline"
               onClick={() => handleSocialLogin("github")}
               disabled={isLoading}
+              className="w-full"
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub
@@ -149,7 +150,7 @@ function LoginForm() {
                 variant="outline"
                 onClick={() => handleSocialLogin("google")}
                 disabled={isLoading}
-                className="mt-1"
+                className="mt-1 w-full sm:w-1/2"
               >
                 <GoogleIcon className="mr-2 h-4 w-4" />
                 Google
