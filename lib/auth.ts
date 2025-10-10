@@ -21,6 +21,30 @@ const WordPressProvider = {
   // Use object form to avoid NextAuth parsing issues
   token: {
     url: "https://public-api.wordpress.com/oauth2/token",
+    // WordPress expects client_id and client_secret in POST body (not Basic Auth)
+    async request(context: any) {
+      const { provider, params } = context;
+      const body = new URLSearchParams({
+        ...params,
+        client_id: provider.clientId as string,
+        client_secret: provider.clientSecret as string,
+      } as Record<string, string>);
+
+      const res = await fetch("https://public-api.wordpress.com/oauth2/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("❌ WordPress token error:", res.status, text);
+        throw new Error(`WordPress token exchange failed: ${res.status}`);
+      }
+
+      const tokens = await res.json();
+      return { tokens } as any;
+    },
   },
   userinfo: {
     // Request explicit fields; email may be omitted otherwise for some accounts
