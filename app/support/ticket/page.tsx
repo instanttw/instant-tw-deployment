@@ -72,19 +72,29 @@ export default function SubmitTicketPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <select id="category" className="w-full px-3 py-2 border rounded-md" value={category} onChange={(e)=>setCategory(e.target.value)}>
-                    <option>General</option>
-                    <option>Technical</option>
-                    <option>Billing</option>
-                    <option>Sales</option>
+                  <select
+                    id="category"
+                    value={category}
+                    onChange={(e)=>setCategory(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-md bg-white text-gray-900 dark:bg-background dark:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <option className="text-gray-900" value="General">General</option>
+                    <option className="text-gray-900" value="Technical">Technical</option>
+                    <option className="text-gray-900" value="Billing">Billing</option>
+                    <option className="text-gray-900" value="Sales">Sales</option>
                   </select>
                 </div>
                 <div>
                   <Label htmlFor="priority">Priority</Label>
-                  <select id="priority" className="w-full px-3 py-2 border rounded-md" value={priority} onChange={(e)=>setPriority(e.target.value)}>
-                    <option value="low">Low</option>
-                    <option value="normal">Normal</option>
-                    <option value="high">High</option>
+                  <select
+                    id="priority"
+                    value={priority}
+                    onChange={(e)=>setPriority(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-md bg-white text-gray-900 dark:bg-background dark:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <option className="text-gray-900" value="low">Low</option>
+                    <option className="text-gray-900" value="normal">Normal</option>
+                    <option className="text-gray-900" value="high">High</option>
                   </select>
                 </div>
               </div>
