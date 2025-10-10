@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Github } from "lucide-react";
 import { WordPressIcon } from "@/components/icons/wordpress-icon";
+import { GoogleIcon } from "@/components/icons/google-icon";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -64,7 +65,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleSocialSignup = async (provider: "wordpress" | "github") => {
+  const handleSocialSignup = async (provider: "wordpress" | "github" | "google") => {
     setIsLoading(true);
     try {
       await signIn(provider, { callbackUrl: "/dashboard" });
@@ -193,6 +194,17 @@ export default function SignupPage() {
               <Github className="mr-2 h-4 w-4" />
               GitHub
             </Button>
+            <div className="col-span-2 flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => handleSocialSignup("google")}
+                disabled={isLoading}
+                className="mt-1"
+              >
+                <GoogleIcon className="mr-2 h-4 w-4" />
+                Google
+              </Button>
+            </div>
           </div>
 
           <div className="text-center text-sm">
