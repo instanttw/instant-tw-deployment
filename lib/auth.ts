@@ -9,6 +9,8 @@ const WordPressProvider = {
   id: "wordpress",
   name: "WordPress",
   type: "oauth" as const,
+  // WordPress.com OAuth 2.0 does not require PKCE; stick to state to avoid callback errors
+  checks: ["state"] as const,
   authorization: {
     url: "https://public-api.wordpress.com/oauth2/authorize",
     params: {
@@ -37,6 +39,18 @@ const WordPressProvider = {
 };
 
 export const authOptions: NextAuthOptions = {
+  debug: true,
+  logger: {
+    error(code, metadata) {
+      console.error("❌ NextAuth error:", code, metadata);
+    },
+    warn(code) {
+      console.warn("⚠️ NextAuth warn:", code);
+    },
+    debug(code, metadata) {
+      console.log("🔍 NextAuth debug:", code, metadata);
+    },
+  },
   providers: [
     CredentialsProvider({
       name: "credentials",
