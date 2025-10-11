@@ -1,5 +1,3 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 
@@ -17,12 +15,6 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Get messages for the locale
-  const messages = await getMessages();
-
-  return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
-    </NextIntlClientProvider>
-  );
+  // i18n provider is in root layout
+  return <>{children}</>;
 }
