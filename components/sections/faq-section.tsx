@@ -1,6 +1,5 @@
 "use client";
 
-import { FAQSchema } from "@/components/seo/faq-schema";
 import {
   Accordion,
   AccordionContent,
@@ -54,7 +53,6 @@ const faqs = [
 export function FAQSection() {
   return (
     <section className="py-16 md:py-24 bg-secondary/10">
-      <FAQSchema faqs={faqs} />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
