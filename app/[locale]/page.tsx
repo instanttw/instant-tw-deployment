@@ -6,7 +6,8 @@ import { Benefits } from "@/components/sections/benefits";
 import { Testimonials } from "@/components/sections/testimonials";
 import { FAQSection } from "@/components/sections/faq-section";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <>
       <Hero />
