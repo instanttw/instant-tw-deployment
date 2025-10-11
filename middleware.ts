@@ -9,13 +9,9 @@ export default createMiddleware({
 });
 
 export const config = {
-  // Match all pathnames except:
-  // - API routes (/api)
-  // - Next.js internals (/_next, /_vercel)
-  // - Static files (images, fonts, etc.)
-  // - Auth/protected routes (/login, /signup, /dashboard, /admin, /checkout)
-  // - WP Scan routes (/wp-scan) - handled separately
+  // Only apply internationalization to core business pages that are in [locale]
+  // Exclude all root-level pages and system routes
   matcher: [
-    '/((?!api|_next|_vercel|login|signup|dashboard|admin|checkout|wp-scan|.*\\..*).*)',
+    '/((?!api|_next|_vercel|.*\\.|login|signup|dashboard|admin|checkout|wp-scan|about|blog|careers|changelog|community|contact|partners|privacy|refund-policy|roadmap|terms|affiliates).*)',
   ],
 };
