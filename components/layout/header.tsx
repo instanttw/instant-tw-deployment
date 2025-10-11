@@ -9,7 +9,7 @@ import { Menu, X, Search } from "lucide-react";
 import { CurrencySwitcher } from "@/components/ui/currency-switcher";
 import { SearchModal } from "@/components/search/search-modal";
 import { UserAvatarMenu } from "@/components/dashboard/user-avatar-menu";
-import { useTranslations } from "@/lib/translations";
+import { useTranslations } from "next-intl";
 
 export function Header() {
   const t = useTranslations("header");
