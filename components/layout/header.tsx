@@ -10,10 +10,29 @@ import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { CurrencySwitcher } from "@/components/ui/currency-switcher";
 import { SearchModal } from "@/components/search/search-modal";
 import { UserAvatarMenu } from "@/components/dashboard/user-avatar-menu";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
+
+// Temporary fallback translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    wpScan: "WP Scan",
+    hosting: "Hosting",
+    themes: "Themes",
+    plugins: "Plugins",
+    services: "Services",
+    pricing: "Pricing",
+    maintenance: "Maintenance",
+    speedOptimization: "Speed Optimization",
+    security: "Security",
+    seo: "SEO",
+    searchPlaceholder: "Search...",
+    browsePlugins: "Browse Plugins",
+  };
+  return translations[key] || key;
+};
 
 export function Header() {
-  const t = useTranslations("header");
+  const t = mockT; // Use mock translations
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);

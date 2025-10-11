@@ -5,10 +5,44 @@ import Image from "next/image";
 import { Facebook, Twitter, Linkedin, Youtube, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CookieSettingsLink } from "@/components/cookie-consent/cookie-settings-link";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
+
+// Temporary fallback translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    description: "Transform your WordPress site with our premium plugins and services. Professional features, exceptional support, and regular updates.",
+    products: "Products",
+    wpScan: "WP Scan",
+    maintenancePlans: "Maintenance Plans",
+    speedOptimization: "Speed Optimization",
+    securityServices: "Security",
+    seoServices: "SEO",
+    managedHosting: "Managed Hosting",
+    customThemes: "Custom Themes",
+    company: "Company",
+    about: "About Us",
+    contact: "Contact",
+    blog: "Blog",
+    careers: "Careers",
+    partners: "Partners",
+    affiliates: "Affiliates",
+    support: "Support",
+    docs: "Documentation",
+    api: "API",
+    roadmap: "Roadmap",
+    changelog: "Changelog",
+    legal: "Legal",
+    privacy: "Privacy Policy",
+    terms: "Terms of Service",
+    refund: "Refund Policy",
+    followUs: "Follow Us",
+    allRights: "All rights reserved.",
+  };
+  return translations[key] || key;
+};
 
 export function Footer() {
-  const t = useTranslations("footer");
+  const t = mockT; // Use mock translations
   return (
     <footer className="border-t bg-secondary/10">
       <div className="container mx-auto px-4 py-12">
