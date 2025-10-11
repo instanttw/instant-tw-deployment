@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import { getMessages, getLocale } from "next-intl/server"; // DISABLED
+import { getLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -13,7 +13,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { AuthProvider } from "@/components/auth-provider";
 import { Toaster } from "sonner";
-// import { IntlProvider } from "@/components/i18n/intl-provider"; // DISABLED
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
@@ -39,16 +39,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // EMERGENCY FIX: Temporarily disabled i18n to restore site
-  const locale = 'en';
+  // Get locale from next-intl
+  const locale = await getLocale();
   
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -68,7 +68,6 @@ export default function RootLayout({
           <CartProvider>
             <CookieConsentProvider>
               <CurrencyProvider>
-                {/* IntlProvider temporarily removed */}
                 <Header />
                 <main>{children}</main>
                 <Footer />

@@ -1,16 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-// import createMiddleware from "next-intl/middleware"; // DISABLED - causing site-wide 404s
+import createMiddleware from 'next-intl/middleware';
+import { locales } from './i18n';
 
-// EMERGENCY FIX: Disable all middleware to restore site functionality
-// The next-intl implementation was causing ALL routes to return 404
-// Will re-implement i18n properly after site is restored
-
-export default function middleware(request: NextRequest) {
-  // TEMPORARILY DISABLED: All middleware bypassed to fix 404 errors
-  return NextResponse.next();
-}
+export default createMiddleware({
+  locales,
+  defaultLocale: 'en',
+  localePrefix: 'as-needed', // Don't add /en prefix for default locale
+  localeDetection: true, // Auto-detect from browser
+});
 
 export const config = {
+  // Match all pathnames except:
+  // - API routes (/api)
+  // - Next.js internals (/_next, /_vercel)
+  // - Static files (images, fonts, etc.)
+  // - Auth/protected routes (/login, /signup, /dashboard, /admin, /checkout)
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)"],
+    '/((?!api|_next|_vercel|login|signup|dashboard|admin|checkout|.*\\..*).*)',
+  ],
 };

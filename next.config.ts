@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
-// import createNextIntlPlugin from "next-intl/plugin"; // DISABLED - causing 404s
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 const nextConfig: NextConfig = {
   // No output: 'export' for dash.instant.tw (needs dynamic features)
@@ -29,5 +31,5 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
 };
-// const withNextIntl = createNextIntlPlugin(); // DISABLED
-export default nextConfig; // Direct export without i18n plugin
+
+export default withNextIntl(nextConfig);

@@ -5,57 +5,10 @@ import Image from "next/image";
 import { Facebook, Twitter, Linkedin, Youtube, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CookieSettingsLink } from "@/components/cookie-consent/cookie-settings-link";
-// import { useTranslations } from "next-intl"; // DISABLED
-
-// Temporary fallback translations
-const mockT = (key: string) => {
-  const translations: Record<string, string> = {
-    tagline: "Premium WordPress plugins built for success. Transform your website with professional features, exceptional support, and regular updates.",
-    description: "Transform your WordPress site with our premium plugins and services. Professional features, exceptional support, and regular updates.",
-    products: "Products",
-    services: "Services",
-    resources: "Resources",
-    company: "Company",
-    allPlugins: "All Plugins",
-    seoTools: "SEO Tools",
-    ecommerce: "E-Commerce",
-    security: "Security",
-    pricing: "Pricing",
-    wpScan: "WP Scan",
-    maintenancePlans: "Maintenance Plans",
-    speedOptimization: "Speed Optimization",
-    securityServices: "Security Services",
-    seoServices: "SEO Services",
-    managedHosting: "Managed Hosting",
-    customThemes: "Custom Themes",
-    documentation: "Documentation",
-    blog: "Blog",
-    support: "Support",
-    changelog: "Changelog",
-    roadmap: "Roadmap",
-    api: "API",
-    aboutUs: "About Us",
-    contact: "Contact",
-    careers: "Careers",
-    partners: "Partners",
-    affiliates: "Affiliates",
-    copyright: "© 2025 Instant. All rights reserved.",
-    privacy: "Privacy Policy",
-    terms: "Terms of Service",
-    refund: "Refund Policy",
-    trustedPayments: "Trusted Payment Methods:",
-    sslSecured: "SSL Secured",
-    gdprCompliant: "GDPR Compliant",
-    pciDss: "PCI DSS Level 1",
-    uptime: "99.9% Uptime",
-    moneyBack: "Money Back Guarantee",
-    support247: "24/7 Support",
-  };
-  return translations[key] || key;
-};
+import { useTranslations } from "next-intl";
 
 export function Footer() {
-  const t = mockT; // Use mock translations
+  const t = useTranslations("footer");
   return (
     <footer className="border-t bg-secondary/10">
       <div className="container mx-auto px-4 py-12">
