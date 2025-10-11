@@ -20,7 +20,86 @@
     "title": "Premium & Custom WordPress Plugins Built for Success",
     "subtitle": "Transform your WordPress site with our collection of premium plugins. Professional features, exceptional support, and regular updates guaranteed.",
     "cta": "Browse All Plugins",
-    "viewPricing": "View Pricing"
+    "viewPricing": "View Pricing",
+    "featuredPlugins": {
+      "title": "Featured Plugins",
+      "description": "Discover our most popular WordPress plugins trusted by thousands of users worldwide",
+      "viewAll": "View All Plugins"
+    },
+    "services": {
+      "title": "Complete WordPress Services",
+      "description": "Everything you need to keep your WordPress website secure, fast, and successful"
+    },
+    "benefits": {
+      "title": "Why Choose Our Plugins?",
+      "description": "We're committed to delivering exceptional WordPress plugins that help your business grow",
+      "items": {
+        "0": {
+          "title": "Secure & Reliable",
+          "description": "Enterprise-grade security with regular updates and vulnerability patches to keep your site safe."
+        },
+        "1": {
+          "title": "Lightning Fast",
+          "description": "Optimized code and performance-first approach ensures your site stays blazing fast."
+        },
+        "2": {
+          "title": "Expert Support",
+          "description": "Get help from our dedicated support team with average response time under 2 hours."
+        },
+        "3": {
+          "title": "Clean Code",
+          "description": "Well-documented, WordPress coding standards compliant code that's easy to customize."
+        },
+        "4": {
+          "title": "Regular Updates",
+          "description": "Stay current with WordPress updates and get new features added regularly."
+        },
+        "5": {
+          "title": "Premium Quality",
+          "description": "Each plugin goes through rigorous testing to ensure the highest quality standards."
+        }
+      }
+    },
+    "testimonials": {
+      "title": "Loved by Thousands of Users",
+      "description": "Don't just take our word for it - hear what our customers have to say",
+      "items": {
+        "0": {
+          "name": "Sarah Johnson",
+          "company": "TechStart Inc",
+          "content": "These plugins transformed our WordPress site. The SEO toolkit alone increased our organic traffic by 150% in just 3 months. Outstanding quality and support!"
+        },
+        "1": {
+          "name": "Michael Chen",
+          "company": "E-Commerce Pro",
+          "content": "The WooCommerce Boost plugin is a game-changer. Our conversion rate improved by 45% and the customer experience is so much better. Worth every penny!"
+        },
+        "2": {
+          "name": "Emily Rodriguez",
+          "company": "Creative Agency",
+          "content": "As an agency managing 50+ client sites, these plugins save us countless hours. The white-label options and bulk management features are incredible."
+        },
+        "3": {
+          "name": "David Thompson",
+          "company": "Security Solutions",
+          "content": "Security Shield gave us peace of mind. It blocked over 10,000 attacks last month alone. The real-time monitoring and detailed reports are fantastic."
+        }
+      }
+    },
+    "wpScanPromo": {
+      "badge": "New Service",
+      "title": "WP Scan",
+      "subtitle": "WordPress Security Scanner",
+      "description": "Protect your WordPress website from vulnerabilities, outdated plugins, and security threats. Get instant security reports and recommendations to keep your site safe.",
+      "features": {
+        "0": "Scan for vulnerabilities in seconds",
+        "1": "Track outdated plugins & themes",
+        "2": "Get actionable security recommendations",
+        "3": "24/7 automated monitoring available"
+      },
+      "ctaPrimary": "Start Free Scan",
+      "ctaSecondary": "View Pricing"
+    }
   },
   "plugins": {
     "title": "All Plugins",

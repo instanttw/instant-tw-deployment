@@ -5,8 +5,11 @@ import { Shield, Zap, TrendingUp, Lock, Clock, Server, ArrowRight } from "lucide
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function ServicesOverview() {
+  const t = useTranslations("home");
+  
   const services = [
     {
       icon: Shield,
@@ -78,10 +81,10 @@ export function ServicesOverview() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Complete WordPress Services
+            {t("services.title")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to keep your WordPress website secure, fast, and successful
+            {t("services.description")}
           </p>
         </motion.div>
 
