@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -13,6 +14,7 @@ import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { AuthProvider } from "@/components/auth-provider";
 import { Toaster } from "sonner";
 import { OrganizationSchema, WebsiteSchema } from "@/components/seo";
+import enMessages from "@/messages/en.json";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -105,7 +107,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Root layout for all routes (i18n context provided by [locale]/layout.tsx for i18n pages)
+  // Provide default en locale for Header/Footer components
   return (
     <html lang="en">
       <head>
@@ -127,21 +129,23 @@ export default function RootLayout({
             `,
           }}
         />
-        <AuthProvider>
-          <CartProvider>
-            <CookieConsentProvider>
-              <CurrencyProvider>
-                <Header />
-                <main>{children}</main>
-                <Footer />
-                <FloatingChatbot />
-                <CookieBanner />
-                <CartSidebar />
-                <Toaster position="top-right" richColors />
-              </CurrencyProvider>
-            </CookieConsentProvider>
-          </CartProvider>
-        </AuthProvider>
+        <NextIntlClientProvider locale="en" messages={enMessages}>
+          <AuthProvider>
+            <CartProvider>
+              <CookieConsentProvider>
+                <CurrencyProvider>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                  <FloatingChatbot />
+                  <CookieBanner />
+                  <CartSidebar />
+                  <Toaster position="top-right" richColors />
+                </CurrencyProvider>
+              </CookieConsentProvider>
+            </CartProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
