@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
-
+// Root page redirects are handled by next-intl middleware
 export default function RootPage() {
-  // Redirect root to /en (default locale)
-  redirect('/en');
+  return null;
 }
