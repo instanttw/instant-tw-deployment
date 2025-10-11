@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc -p tsconfig.ui.json --noEmit",
+    "typecheck:full": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.2",
@@ -40,11 +42,11 @@
     "next": "15.5.4",
     "next-auth": "^4.24.11",
     "next-intl": "^4.3.9",
+    "otplib": "^12.0.1",
     "pg": "^8.16.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "resend": "^6.1.2",
-    "otplib": "^12.0.1",
     "sonner": "^2.0.7",
     "stripe": "^19.1.0",
     "tailwind-merge": "^3.3.1",
