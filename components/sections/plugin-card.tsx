@@ -25,6 +25,13 @@ const mockT = (key: string) => {
     getStarted: "Get Started",
     downloads: "Downloads",
     rating: "Rating",
+    downloadFree: "Download Free",
+    getPro: "Get Pro",
+    quickFeatures: "Quick Features:",
+    proFrom: "Pro from",
+    from: "From",
+    perYear: "/year",
+    perMonth: "/month"
   };
   return translations[key] || key;
 };
