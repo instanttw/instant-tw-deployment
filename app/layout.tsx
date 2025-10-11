@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { FloatingChatbot } from "@/components/chatbot/floating-chatbot";
-import { CurrencyProvider } from "@/lib/currency-context";
-import { CookieConsentProvider } from "@/lib/cookie-consent-context";
-import { CookieBanner } from "@/components/cookie-consent/cookie-banner";
-import { CartProvider } from "@/lib/cart-context";
-import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { AuthProvider } from "@/components/auth-provider";
 import { Toaster } from "sonner";
 import { OrganizationSchema, WebsiteSchema } from "@/components/seo";
-import enMessages from "@/messages/en.json";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -107,7 +97,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Provide default en locale for Header/Footer components
+  // Minimal root layout - Header/Footer moved to [locale] layout for i18n context
   return (
     <html lang="en">
       <head>
@@ -129,23 +119,10 @@ export default function RootLayout({
             `,
           }}
         />
-        <NextIntlClientProvider locale="en" messages={enMessages}>
-          <AuthProvider>
-            <CartProvider>
-              <CookieConsentProvider>
-                <CurrencyProvider>
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                  <FloatingChatbot />
-                  <CookieBanner />
-                  <CartSidebar />
-                  <Toaster position="top-right" richColors />
-                </CurrencyProvider>
-              </CookieConsentProvider>
-            </CartProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
+        <AuthProvider>
+          <Toaster position="top-right" richColors />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
