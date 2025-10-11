@@ -1,0 +1,44 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "app/layout.tsx",
+    "app/page.tsx",
+    "app/plugins/page.tsx",
+    "app/docs/page.tsx",
+    "components/layout/header.tsx",
+    "components/layout/footer.tsx",
+    "components/search/search-modal.tsx",
+    "components/sections/plugin-card.tsx",
+    "components/ui/button.tsx",
+    "components/ui/input.tsx",
+    "components/ui/badge.tsx",
+    "components/ui/language-switcher.tsx",
+    "components/ui/currency-switcher.tsx",
+    "components/ui/dropdown-menu.tsx",
+    "components/ui/avatar.tsx",
+    "components/ui/separator.tsx",
+    "components/ui/scroll-area.tsx",
+    "components/ui/dialog.tsx",
+    "components/i18n/intl-provider.tsx",
+    "config/plugins.ts",
+    "config/plugins-data.ts",
+    "messages/**/*.json",
+    "types/next-auth.d.ts",
+    "i18n.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "app/api/**",
+    "app/admin/**",
+    "app/dashboard/**",
+    "app/checkout/**",
+    "lib/**",
+    "database/**",
+    "server-only-features/**",
+    "scripts/**"
+  ]
+}

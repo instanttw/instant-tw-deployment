@@ -1,0 +1,207 @@
+================================================================
+  UPLOAD TO VPS WITHOUT TERMINAL ACCESS - QUICK GUIDE
+================================================================
+
+This guide is for uploading to your VPS via FTP/File Manager
+(no SSH/terminal access needed)
+
+================================================================
+  STEP 1: BUILD STATIC EXPORT (ON YOUR COMPUTER)
+================================================================
+
+1. Open terminal/PowerShell
+
+2. Go to source folder:
+   cd C:\Users\PIETER\Downloads\wp-website
+
+3. Build static export:
+   npm run build
+
+4. Wait for build to complete
+
+5. Check that 'out' folder was created:
+   C:\Users\PIETER\Downloads\wp-website\out\
+
+================================================================
+  STEP 2: CREATE SUBDOMAIN ON VPS
+================================================================
+
+Via cPanel/Control Panel:
+
+1. Login to your control panel
+
+2. Find "Subdomains" or "Domains" section
+
+3. Create new subdomain:
+   - Subdomain: wp
+   - Domain: instant.tw
+   - Document Root: /public_html/wp (or custom path)
+
+4. Save and note the document root path
+
+================================================================
+  STEP 3: UPLOAD FILES
+================================================================
+
+OPTION A - FTP Client (FileZilla):
+-----------------------------------
+1. Download FileZilla (free)
+
+2. Connect to your VPS:
+   - Host: Your VPS IP or domain
+   - Username: FTP username
+   - Password: FTP password
+   - Port: 21
+
+3. Navigate to subdomain folder:
+   - Remote: /public_html/wp
+   - Local: C:\Users\PIETER\Downloads\wp-website\out
+
+4. Upload all files from 'out' folder
+
+5. Wait for upload to complete
+
+
+OPTION B - cPanel File Manager (Faster):
+----------------------------------------
+1. Compress the 'out' folder on your computer:
+   - Right-click 'out' folder
+   - "Send to" → "Compressed (zipped) folder"
+   - Name it: wp-marketplace.zip
+
+2. Login to cPanel → File Manager
+
+3. Navigate to: /public_html/wp
+
+4. Upload wp-marketplace.zip
+
+5. Right-click zip → Extract
+
+6. Move all files from extracted 'out' folder to wp folder
+
+7. Delete zip file and empty folders
+
+================================================================
+  STEP 4: CREATE .HTACCESS FILE
+================================================================
+
+If using Apache (most common):
+
+1. In cPanel File Manager, go to /public_html/wp
+
+2. Create new file: .htaccess
+
+3. Add this content:
+
+---
+RewriteEngine On
+DirectoryIndex index.html
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+ErrorDocument 404 /404.html
+---
+
+4. Save
+
+================================================================
+  STEP 5: INSTALL SSL
+================================================================
+
+In cPanel:
+
+1. Go to "SSL/TLS Status"
+
+2. Find wp.instant.tw
+
+3. Click "Run AutoSSL" or "Install Let's Encrypt"
+
+4. Wait for certificate (1-5 minutes)
+
+OR contact your hosting support to install SSL
+
+================================================================
+  STEP 6: TEST
+================================================================
+
+Wait 5-10 minutes, then visit:
+
+✓ https://wp.instant.tw
+✓ https://wp.instant.tw/plugins/
+✓ https://wp.instant.tw/pricing/
+
+Check:
+- Site loads correctly
+- HTTPS working (green padlock)
+- All pages accessible
+- Images loading
+- Buttons work
+
+================================================================
+  TROUBLESHOOTING
+================================================================
+
+Site not loading?
+  - Wait 10 more minutes for DNS
+  - Check subdomain created correctly
+  - Verify document root path
+
+404 errors?
+  - Check .htaccess file exists
+  - Ensure all files uploaded
+
+Images not loading?
+  - Check _next folder uploaded
+  - Clear browser cache (Ctrl+F5)
+
+SSL not working?
+  - Run AutoSSL in cPanel
+  - Contact hosting support
+
+================================================================
+  FILE STRUCTURE ON VPS
+================================================================
+
+Your subdomain folder should look like:
+
+/public_html/wp/
+├── index.html
+├── plugins/
+│   ├── index.html
+│   └── ... plugin folders
+├── pricing/
+├── privacy/
+├── terms/
+├── _next/
+│   └── static/
+├── favicon.ico
+└── .htaccess
+
+================================================================
+  UPDATE PROCESS
+================================================================
+
+To update your site later:
+
+1. Make changes locally
+2. Run: npm run build
+3. Upload new 'out' folder files to VPS
+4. Replace old files
+5. Done!
+
+================================================================
+  DONE!
+================================================================
+
+Your marketplace is now live at: https://wp.instant.tw
+
+No terminal access needed! ✅
+
+For detailed guide, see: VPS_STATIC_EXPORT_GUIDE.md
+
+================================================================

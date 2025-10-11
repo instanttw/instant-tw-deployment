@@ -1,0 +1,47 @@
+✅ DATABASE CONFIGURATION UPDATED
+=====================================
+
+Your .env.production file has been updated with your actual database credentials:
+
+Database Name: instantt_wp
+Username: instantt_wp  
+Password: KLEcpFWeyAbdGjFCgmUS
+Host: localhost
+Port: 3306
+
+Connection String:
+DATABASE_URL=mysql://instantt_wp:KLEcpFWeyAbdGjFCgmUS@localhost:3306/instantt_wp
+
+=====================================
+WHAT CHANGED:
+=====================================
+
+OLD Database: admin_wpinstant
+NEW Database: instantt_wp
+
+OLD Username: admin_wpinstant  
+NEW Username: instantt_wp
+
+OLD Password: QfJr8nDWKgXmaEZzB9g2
+NEW Password: KLEcpFWeyAbdGjFCgmUS
+
+=====================================
+✅ READY TO UPLOAD
+=====================================
+
+Your .env.production file is now correct and ready to upload!
+
+Make sure to include this file when uploading to your VPS.
+
+=====================================
+TEST AFTER UPLOAD:
+=====================================
+
+Once on VPS, test connection:
+
+ssh your-user@your-vps-ip
+mysql -u instantt_wp -p'KLEcpFWeyAbdGjFCgmUS' instantt_wp
+
+Should connect successfully!
+
+See DATABASE_TEST.md for more testing commands.

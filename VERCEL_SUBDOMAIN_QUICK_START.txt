@@ -1,0 +1,200 @@
+================================================================
+  DEPLOY TO SUBDOMAIN (wp.instant.tw) - QUICK GUIDE
+================================================================
+
+This guide shows you how to deploy your marketplace to wp.instant.tw
+subdomain using Vercel (5-10 minutes).
+
+================================================================
+  STEP 1: DEPLOY TO VERCEL
+================================================================
+
+1. Open terminal/command prompt
+
+2. Go to deployment folder:
+   cd C:\Users\PIETER\Downloads\instant-tw-deployment
+
+3. Install Vercel CLI (if not installed):
+   npm i -g vercel
+
+4. Login to Vercel:
+   vercel login
+
+5. Deploy:
+   vercel
+
+6. Follow prompts:
+   - Login with your account
+   - Confirm project name
+   - Wait for deployment
+   - Note the URL (e.g., instant-tw.vercel.app)
+
+================================================================
+  STEP 2: ADD SUBDOMAIN IN VERCEL
+================================================================
+
+1. Go to Vercel Dashboard:
+   https://vercel.com/dashboard
+
+2. Click your project
+
+3. Go to: Settings → Domains
+
+4. Click "Add" button
+
+5. Enter: wp.instant.tw
+
+6. Click "Add"
+
+7. Vercel will show DNS instructions (usually CNAME)
+
+================================================================
+  STEP 3: CONFIGURE DNS
+================================================================
+
+Go to your domain registrar (where you bought instant.tw):
+
+Add this DNS record:
+----------------------------------
+Type:  CNAME
+Name:  wp
+Value: cname.vercel-dns.com
+TTL:   3600 (or default)
+----------------------------------
+
+Save the DNS record.
+
+================================================================
+  STEP 4: SET ENVIRONMENT VARIABLE
+================================================================
+
+In Vercel Dashboard:
+
+1. Go to: Settings → Environment Variables
+
+2. Add new variable:
+   Name:  NEXT_PUBLIC_SITE_URL
+   Value: https://wp.instant.tw
+   Environment: Select all (Production, Preview, Development)
+
+3. Click "Save"
+
+4. Click "Redeploy" to apply changes
+
+================================================================
+  STEP 5: WAIT & VERIFY
+================================================================
+
+1. Wait 5-10 minutes for DNS propagation
+
+2. Visit: https://wp.instant.tw
+
+3. Check:
+   ✓ Site loads
+   ✓ HTTPS working (green padlock)
+   ✓ All pages work
+
+4. Test these URLs:
+   https://wp.instant.tw/plugins
+   https://wp.instant.tw/pricing
+   https://wp.instant.tw/privacy
+
+================================================================
+  IMPORTANT: PLUGIN URLS
+================================================================
+
+Your "Get Plugin" buttons currently have placeholder URLs.
+
+Since you're using:
+  - Google Drive for plugin files
+  - Stripe for payments
+
+Update plugin URLs to link directly to:
+  - Google Drive download links (for free plugins)
+  - Stripe payment links (for paid plugins)
+
+No intermediate subdomain needed!
+
+See PLUGIN_URLS_GOOGLE_STRIPE.md for complete instructions.
+
+================================================================
+  UPDATE PLUGIN URLS
+================================================================
+
+1. Upload plugins to Google Drive, get download links
+
+2. Create Stripe payment links for paid plugins
+
+3. Edit: C:\Users\PIETER\Downloads\wp-website\config\plugins-data.ts
+   
+   Update each plugin's productUrl:
+   - Free plugins: Google Drive download link
+   - Paid plugins: Stripe payment link
+
+   Example:
+   productUrl: "https://drive.google.com/uc?export=download&id=FILE-ID"
+   productUrl: "https://buy.stripe.com/YOUR-PAYMENT-LINK"
+
+4. Rebuild:
+   cd C:\Users\PIETER\Downloads\wp-website
+   npm run build
+
+5. Copy to deployment folder:
+   robocopy .next C:\Users\PIETER\Downloads\instant-tw-deployment\.next /E
+   Copy-Item config\plugins-data.ts C:\Users\PIETER\Downloads\instant-tw-deployment\config\ -Force
+
+6. Redeploy:
+   cd C:\Users\PIETER\Downloads\instant-tw-deployment
+   vercel --prod
+
+================================================================
+  COMPLETE SETUP EXAMPLE
+================================================================
+
+Your architecture:
+
+instant.tw       → Your other project
+wp.instant.tw    → This marketplace (Vercel)
+                    ↓
+                 Buttons link directly to:
+                    ↓
+Google Drive     → Free plugin downloads
+Stripe           → Paid plugin purchases
+
+DNS Setup:
+--------------------------------------------------
+instant.tw       CNAME → your-other-project
+wp.instant.tw    CNAME → cname.vercel-dns.com
+--------------------------------------------------
+
+No additional subdomain needed!
+
+================================================================
+  TROUBLESHOOTING
+================================================================
+
+Site not loading?
+  - Wait 10-30 minutes for DNS propagation
+  - Clear browser cache (Ctrl+F5)
+  - Check DNS: https://dnschecker.org
+
+SSL error?
+  - Wait 5 minutes for Vercel to issue SSL
+  - Check domain added correctly in Vercel
+
+Wrong URLs?
+  - Set environment variable in Vercel
+  - Redeploy project
+
+================================================================
+  DONE!
+================================================================
+
+Your marketplace is now live at: https://wp.instant.tw
+
+Don't forget to:
+1. Set up plugin download subdomain
+2. Update plugin URLs if needed
+3. Test all functionality
+
+================================================================

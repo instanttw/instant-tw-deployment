@@ -1,0 +1,53 @@
+📦 UPLOAD THESE FILES AND FOLDERS TO YOUR VPS
+==============================================
+
+Upload the CONTENTS of this folder (instant-tw-deployment) to your VPS.
+
+From: C:\Users\PIETER\Downloads\instant-tw-deployment\
+
+To: Your VPS DirectAdmin location (typically one of these):
+    - /home/your-username/domains/wp.instant.tw/public_html/
+    - /home/your-username/public_html/wp.instant.tw/
+    - /var/www/wp.instant.tw/
+    - (Check your DirectAdmin to find the exact path)
+
+==============================================
+FOLDERS TO UPLOAD:
+==============================================
+✅ app/
+✅ components/
+✅ lib/
+✅ public/
+✅ config/
+✅ types/
+✅ messages/
+✅ database/
+
+==============================================
+FILES TO UPLOAD:
+==============================================
+✅ .env.production          ⚠️ VERY IMPORTANT!
+✅ package.json
+✅ package-lock.json
+✅ next.config.ts
+✅ tsconfig.json
+✅ tailwind.config.ts
+✅ postcss.config.mjs
+✅ eslint.config.mjs
+✅ next-env.d.ts
+✅ i18n.ts
+✅ middleware.ts.backup (if exists)
+
+==============================================
+DO NOT UPLOAD (exclude these):
+==============================================
+❌ node_modules/          (Too large, will install on server)
+❌ .next/                 (Will be built on server)
+❌ out/                   (Not needed for Node.js deployment)
+❌ .git/                  (Optional, can exclude)
+❌ .gitignore             (Optional)
+❌ *.md files             (Optional - documentation only)
+
+==============================================
+TOTAL SIZE: ~50-100 MB (without node_modules)
+==============================================
