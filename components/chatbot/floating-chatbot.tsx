@@ -291,10 +291,12 @@ export function FloatingChatbot() {
                       <p className="text-sm text-muted-foreground mb-3">Popular questions:</p>
                       <div className="space-y-2">
                         {popularQuestions.map((question, index) => (
-                          <button
+<button
                             key={index}
+                            type="button"
                             onClick={() => handlePreloadedQuestion(question)}
-                            className="w-full text-left p-2 text-sm bg-white hover:bg-primary/10 border border-border rounded-md transition-colors"
+                            className="w-full text-left p-2 text-sm font-medium bg-white text-gray-900 dark:text-gray-900 hover:bg-primary/10 border border-border rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                            aria-label={`Ask: ${question}`}
                           >
                             {question}
                           </button>
