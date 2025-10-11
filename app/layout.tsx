@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { getLocale, getMessages } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -102,17 +100,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Get locale and messages from next-intl (defaults to 'en')
-  const locale = await getLocale();
-  const messages = await getMessages();
-  
+  // Root layout for all routes (i18n context provided by [locale]/layout.tsx for i18n pages)
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html lang="en">
       <head>
         <OrganizationSchema />
         <WebsiteSchema />
@@ -132,23 +127,21 @@ export default async function RootLayout({
             `,
           }}
         />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AuthProvider>
-            <CartProvider>
-              <CookieConsentProvider>
-                <CurrencyProvider>
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                  <FloatingChatbot />
-                  <CookieBanner />
-                  <CartSidebar />
-                  <Toaster position="top-right" richColors />
-                </CurrencyProvider>
-              </CookieConsentProvider>
-            </CartProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
+        <AuthProvider>
+          <CartProvider>
+            <CookieConsentProvider>
+              <CurrencyProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+                <FloatingChatbot />
+                <CookieBanner />
+                <CartSidebar />
+                <Toaster position="top-right" richColors />
+              </CurrencyProvider>
+            </CookieConsentProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
