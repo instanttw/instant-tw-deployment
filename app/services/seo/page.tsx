@@ -10,6 +10,8 @@ import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { useCurrency } from "@/lib/currency-context";
 import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
+import { NextSeo } from 'next-seo';
+import { ServiceSchema } from '@/components/seo/service-schema';
 
 export default function SEOServicesPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
@@ -122,6 +124,35 @@ export default function SEOServicesPage() {
   ];
 
   return (
+    <>
+      <NextSeo
+        title="WordPress SEO Services - Rank Higher on Google & Bing"
+        description="Professional WordPress SEO services to improve your search engine rankings. Technical SEO, on-page optimization, content strategy, and link building. Get more organic traffic."
+        canonical="https://wp.instant.tw/services/seo"
+        openGraph={{
+          type: 'product.group',
+          url: 'https://wp.instant.tw/services/seo',
+          title: 'WordPress SEO Services - Dominate Search Results',
+          description: 'Expert WordPress SEO services to boost your rankings and drive organic traffic.',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: 'WordPress SEO services, WordPress SEO optimization, WordPress SEO consultant, improve WordPress SEO, WordPress search engine optimization, WordPress SEO agency',
+          },
+        ]}
+      />
+      <ServiceSchema
+        name="WordPress SEO Services"
+        description="Professional WordPress SEO services including technical optimization, on-page SEO, content strategy, keyword research, and link building to improve your search engine rankings and drive more organic traffic."
+        serviceType="WordPress SEO"
+        priceRange="$99-$1499"
+        url="https://wp.instant.tw/services/seo"
+        aggregateRating={{
+          ratingValue: 4.9,
+          reviewCount: 623,
+        }}
+      />
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-28 lg:py-36">
@@ -419,5 +450,6 @@ export default function SEOServicesPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

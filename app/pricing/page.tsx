@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import { useCurrency } from "@/lib/currency-context";
 import { Switch } from "@/components/ui/switch";
 import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
+import { NextSeo } from 'next-seo';
 
 const plansData = [
   {
@@ -97,6 +98,23 @@ export default function PricingPage() {
   };
 
   return (
+    <>
+      <NextSeo
+        title="Pricing - Premium WordPress Plugins & Services"
+        description="Affordable pricing for premium WordPress plugins. Pro plans from $49/month, Agency plans from $299/month. All plans include 12+ premium plugins, priority support, and 25% off annual billing. 30-day money-back guarantee."
+        canonical="https://wp.instant.tw/pricing"
+        openGraph={{
+          url: 'https://wp.instant.tw/pricing',
+          title: 'Pricing - Premium WordPress Plugins & Services',
+          description: 'Simple, transparent pricing for premium WordPress plugins. Choose Pro, Agency, or Enterprise plans.',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: 'WordPress plugin pricing, premium plugin cost, WordPress plugin bundles, WordPress services pricing',
+          },
+        ]}
+      />
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
@@ -265,5 +283,6 @@ export default function PricingPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
