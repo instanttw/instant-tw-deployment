@@ -120,8 +120,10 @@ export default function RootLayout({
           }}
         />
         <AuthProvider>
+          <main className="min-h-screen">
+            {children}
+          </main>
           <Toaster position="top-right" richColors />
-          {children}
         </AuthProvider>
       </body>
     </html>
