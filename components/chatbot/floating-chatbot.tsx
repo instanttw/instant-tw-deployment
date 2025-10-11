@@ -86,12 +86,55 @@ export function FloatingChatbot() {
     }
   };
 
+  // Popular preloaded questions
+  const popularQuestions = [
+    "What plugins do you offer?",
+    "How much does the Pro plan cost?",
+    "Do you offer a money-back guarantee?"
+  ];
+
+  const handlePreloadedQuestion = (question: string) => {
+    setInput(question);
+    // Auto-submit the preloaded question
+    const submitEvent = { preventDefault: () => {}, target: { querySelector: () => ({ focus: () => {} }) } } as any;
+    setTimeout(() => handleSubmit(submitEvent), 100);
+  };
+
   const generateResponse = async (query: string): Promise<string> => {
     const lowerQuery = query.toLowerCase();
 
+    // Plugin-specific queries with updated info
+    if (lowerQuery.includes("plugin") || lowerQuery.includes("feature")) {
+      if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("pricing")) {
+        return "Our pricing plans:\n\n• Pro Plan: $49/month ($441/year - save 25%)\n  └ 3 websites, all 12 plugins included\n\n• Agency Plan: $299/month ($2,691/year - save 25%)\n  └ 25 websites, priority support, white-label\n\n• Enterprise Plan: $999/month ($8,991/year - save 25%)\n  └ Unlimited websites, 24/7 support, custom development\n\n30-day money-back guarantee on all plans!\nView details: https://instant.tw/pricing";
+      }
+      if (lowerQuery.includes("seo")) {
+        return "Our Advanced SEO Toolkit helps improve your search rankings:\n\n• Keyword rank tracking\n• Meta tag optimization\n• XML sitemaps generation\n• Schema markup\n• Google Analytics integration\n\nAvailable in Free version and Pro ($19/month standalone).\nIncluded in all paid plans. Learn more: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("security")) {
+        return "Security Shield provides enterprise-grade protection:\n\n• Real-time malware scanning\n• Firewall protection\n• Login security & brute force protection\n• Security monitoring & reports\n• Vulnerability patches\n\nStandalone: $39/month | Included in all paid plans\nProtect your site: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("speed") || lowerQuery.includes("performance")) {
+        return "Performance Pro makes WordPress lightning fast:\n\n• Advanced caching optimization\n• Image compression & WebP conversion\n• Database cleanup & optimization\n• CDN integration\n• Performance monitoring\n\nStandalone: $19/month | Included in all paid plans\nSpeed up your site: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("backup")) {
+        return "Backup Master ensures your data is always safe:\n\n• Automated daily backups\n• Cloud storage (Google Drive, Dropbox, S3)\n• One-click restore functionality\n• Incremental backups\n• Site migration tools\n\nFree version available | Pro: $15/month\nIncluded in all paid plans. Secure your data: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("woocommerce") || lowerQuery.includes("ecommerce")) {
+        return "WooCommerce Boost supercharges your online store:\n\n• Abandoned cart recovery\n• Product recommendations\n• Conversion rate optimization\n• Marketing automation\n• Advanced analytics\n\nStandalone: $29/month | Included in all paid plans\nBoost sales: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("form")) {
+        return "Form Builder Pro creates powerful forms:\n\n• Drag & drop form builder\n• Conditional logic\n• Payment integration (Stripe, PayPal)\n• Email marketing integration\n• Advanced analytics\n\nStandalone: $25/month | Included in all paid plans\nBuild forms: https://instant.tw/plugins";
+      }
+      if (lowerQuery.includes("list") || lowerQuery.includes("available") || lowerQuery.includes("which") || lowerQuery.includes("what plugins")) {
+        return "Our 12 premium WordPress plugins:\n\n🚀 Advanced SEO Toolkit\n🛡️ Security Shield\n⚡ Performance Pro\n💾 Backup Master\n🛒 WooCommerce Boost\n📝 Form Builder Pro\n📊 Analytics Pro\n🔍 Search Enhance\n📧 Email Marketing\n🎨 Design Tools\n🔧 Developer Utils\n📱 Mobile Optimizer\n\nAll included in paid plans. Browse: https://instant.tw/plugins";
+      }
+      return "We offer 12 premium WordPress plugins covering SEO, security, performance, backups, forms, and more. All plugins include regular updates, premium support, and are covered by our 30-day money-back guarantee. Browse all: https://instant.tw/plugins";
+    }
+
     // About company queries
     if (lowerQuery.includes("about") || lowerQuery.includes("company") || lowerQuery.includes("who are")) {
-      return "Instant (https://instant.tw/) is a leading WordPress plugin provider founded in 2017. We serve 590,000+ WordPress sites worldwide with 12 premium plugins. Our mission is to make every WordPress site faster, more secure, and more successful. Learn more at https://instant.tw/about";
+      return "Instant is a leading WordPress plugin provider empowering 5.7 million websites worldwide. Founded with a mission to make WordPress sites faster, more secure, and successful. We're trusted by agencies, developers, and businesses globally. Learn more: https://instant.tw/about";
     }
 
     // Contact and support queries
@@ -113,23 +156,32 @@ export function FloatingChatbot() {
       return "We offer a 30-day money-back guarantee for first-time customers!\n\n• Full refund within 30 days of purchase\n• No questions asked\n• Contact billing@instant.tw to request\n\nView our complete Refund Policy at https://instant.tw/refund";
     }
 
-    // Plugin-related queries
-    if (lowerQuery.includes("plugin") || lowerQuery.includes("feature")) {
-      if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("pricing")) {
-        return "We offer flexible pricing plans:\n\n• Free Plan: 1 site, basic plugins\n• Pro Plan: $49/year, 5 sites\n• Agency Plan: $149/year, unlimited sites\n• Enterprise: Custom pricing\n\n30-day money-back guarantee on all paid plans. See https://instant.tw/pricing";
+    // Pricing-specific queries
+    if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("pricing") || lowerQuery.includes("how much")) {
+      if (lowerQuery.includes("pro")) {
+        return "Pro Plan: $49/month or $441/year (25% savings)\n\n✅ All 12 premium plugins included\n✅ Use on up to 3 websites\n✅ 1 year of updates & support\n✅ Priority email support\n✅ 30-day money-back guarantee\n\nPerfect for individuals and small businesses.\nGet started: https://instant.tw/pricing";
+      } else if (lowerQuery.includes("agency")) {
+        return "Agency Plan: $299/month or $2,691/year (25% savings)\n\n✅ All 12 premium plugins included\n✅ Use on up to 25 websites\n✅ Priority email & phone support\n✅ White label options\n✅ API access\n✅ Dedicated account manager\n\nPerfect for agencies managing multiple clients.\nGet started: https://instant.tw/pricing";
+      } else if (lowerQuery.includes("enterprise")) {
+        return "Enterprise Plan: $999/month or $8,991/year (25% savings)\n\n✅ All 12 premium plugins included\n✅ Unlimited websites\n✅ 24/7 priority support\n✅ Custom SLA guarantee\n✅ On-site training\n✅ Custom development\n✅ Security audits\n\nPerfect for large organizations.\nContact sales: https://instant.tw/pricing";
+      } else {
+        return "Our pricing plans:\n\n💫 Pro: $49/month (3 sites)\n🏢 Agency: $299/month (25 sites)\n🏛️ Enterprise: $999/month (unlimited)\n\nAll plans include:\n• All 12 premium plugins\n• Regular updates & support\n• 30-day money-back guarantee\n• Save 25% with yearly billing\n\nView details: https://instant.tw/pricing";
       }
-      if (lowerQuery.includes("install") || lowerQuery.includes("setup")) {
-        return "Installing our plugins is easy:\n\n1. Download from your account at https://instant.tw/\n2. Go to WordPress Admin → Plugins → Add New\n3. Upload the downloaded file\n4. Activate the plugin\n\nCheck our docs at https://instant.tw/docs for detailed guides.";
-      }
-      if (lowerQuery.includes("list") || lowerQuery.includes("available") || lowerQuery.includes("which")) {
-        return "Our 12 WordPress plugins include:\n\n• Instant Speed Optimizer\n• Instant Security Guard\n• Instant SEO\n• Instant Woo\n• Instant Cache\n• Instant Database Optimizer\n• Instant Broken Link Fixer\n• Instant Content Protector\n• Instant Duplicator\n• Instant Uptime Monitor\n• Instant Form Builder\n• Instant Slider\n\nView all plugins at https://instant.tw/plugins";
-      }
-      return "We offer 12 premium WordPress plugins for performance, security, SEO, and e-commerce. All plugins include regular updates, documentation, and support. Browse at https://instant.tw/plugins";
+    }
+
+    // Installation and setup
+    if (lowerQuery.includes("install") || lowerQuery.includes("setup") || lowerQuery.includes("how to")) {
+      return "Installing our plugins is simple:\n\n1. Download from your account dashboard\n2. Go to WordPress Admin → Plugins → Add New\n3. Upload the downloaded ZIP file\n4. Click 'Install Now' then 'Activate'\n\nDetailed installation guides with screenshots available at https://instant.tw/docs";
     }
 
     // Support queries
     if (lowerQuery.includes("support") || lowerQuery.includes("help") || lowerQuery.includes("assist")) {
-      return "We offer comprehensive support:\n\n• Free Plan: Community forums\n• Pro Plan: Priority email (24h response)\n• Agency Plan: Phone + email (2h response)\n• Enterprise: Dedicated account manager\n\nAverage response time: < 2 hours\nCustomer satisfaction: 97%\n\nVisit https://instant.tw/support or email wp@instant.tw";
+      return "We provide excellent support:\n\n💬 Live Chat: < 2 min response (Mon-Fri 9am-6pm EST)\n📧 Email Support: < 24 hours (24/7)\n🎫 Ticketing System: < 12 hours (24/7)\n\nSupport by plan:\n• Pro: Priority email support\n• Agency: Email + phone support\n• Enterprise: 24/7 dedicated account manager\n\n📊 97% customer satisfaction rate\n📈 Average response time: < 2 hours\n\nGet help: https://instant.tw/support or wp@instant.tw";
+    }
+
+    // WP Scan service queries
+    if (lowerQuery.includes("scan") || lowerQuery.includes("wp scan") || lowerQuery.includes("security scan")) {
+      return "WP Scan - WordPress Security Scanner:\n\n🔍 Free security scans available\n🛡️ Scan for vulnerabilities in seconds\n📊 Track outdated plugins & themes\n💡 Get actionable security recommendations\n🔄 24/7 automated monitoring available\n\nFree scan: Instant vulnerability report\nPremium monitoring: Starting at $19/month\n\nTry free scan: https://instant.tw/wp-scan";
     }
 
     // Documentation queries
@@ -198,6 +250,10 @@ export function FloatingChatbot() {
                   <div className="flex items-center gap-2">
                     <MessagesSquare className="h-5 w-5" />
                     <CardTitle className="text-lg">Chat Support</CardTitle>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                      <span className="text-xs text-primary-foreground/90">Online</span>
+                    </div>
                   </div>
                   <Button
                     variant="ghost"
@@ -209,11 +265,29 @@ export function FloatingChatbot() {
                   </Button>
                 </div>
                 <p className="text-sm text-primary-foreground/90 mt-1">
-                  Ask me anything about our plugins
+                  Ask me about plugins, pricing, and support
                 </p>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="h-[400px] overflow-y-auto p-4 space-y-4">
+                <div className="h-[420px] overflow-y-auto p-4 space-y-4">
+                  {/* Show preloaded questions only on first load */}
+                  {messages.length === 1 && (
+                    <div className="mb-4 p-3 bg-muted/50 rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-3">Popular questions:</p>
+                      <div className="space-y-2">
+                        {popularQuestions.map((question, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handlePreloadedQuestion(question)}
+                            className="w-full text-left p-2 text-sm bg-white hover:bg-primary/10 border border-border rounded-md transition-colors"
+                          >
+                            {question}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -248,7 +322,7 @@ export function FloatingChatbot() {
                   <div ref={messagesEndRef} />
                 </div>
                 <form onSubmit={handleSubmit} className="p-4 border-t">
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 mb-3">
                     <Input
                       type="text"
                       placeholder="Type your question..."
@@ -265,6 +339,9 @@ export function FloatingChatbot() {
                       <Send className="h-4 w-4" />
                     </Button>
                   </div>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Need more help? <a href="/support" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Contact our support team</a>
+                  </p>
                 </form>
               </CardContent>
             </Card>
