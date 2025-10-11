@@ -2,7 +2,6 @@
 
 import { Shield, Zap, HeadphonesIcon, Code, TrendingUp, Award } from "lucide-react";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 
 const benefits = [
   {
@@ -38,17 +37,15 @@ const benefits = [
 ];
 
 export function Benefits() {
-  const t = useTranslations("home");
-  
   return (
     <section className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {t("benefits.title")}
+            Why Choose Our Plugins?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t("benefits.description")}
+            We&apos;re committed to delivering exceptional WordPress plugins that help your business grow
           </p>
         </div>
 
@@ -68,8 +65,8 @@ export function Benefits() {
                   <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <Icon className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{t(`benefits.items.${index}.title`)}</h3>
-                  <p className="text-muted-foreground">{t(`benefits.items.${index}.description`)}</p>
+                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-muted-foreground">{benefit.description}</p>
                 </div>
               </motion.div>
             );

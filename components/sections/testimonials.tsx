@@ -3,7 +3,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 
 const testimonials = [
   {
@@ -37,17 +36,15 @@ const testimonials = [
 ];
 
 export function Testimonials() {
-  const t = useTranslations("home");
-  
   return (
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {t("testimonials.title")}
+            Loved by Thousands of Users
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t("testimonials.description")}
+            Don&apos;t just take our word for it - hear what our customers have to say
           </p>
         </div>
 
@@ -67,8 +64,8 @@ export function Testimonials() {
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <div className="font-semibold">{t(`testimonials.items.${index}.name`)}</div>
-                      <div className="text-sm text-muted-foreground">{t(`testimonials.items.${index}.company`)}</div>
+                      <div className="font-semibold">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.company}</div>
                     </div>
                   </div>
                   
@@ -79,7 +76,7 @@ export function Testimonials() {
                   </div>
 
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    &quot;{t(`testimonials.items.${index}.content`)}&quot;
+                    &quot;{testimonial.content}&quot;
                   </p>
                 </CardContent>
               </Card>

@@ -4,10 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Download, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 
 export function Hero() {
-  const t = useTranslations("home");
   return (
     <section className="relative overflow-hidden py-20 md:py-28 lg:py-36">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
@@ -38,7 +36,11 @@ export function Hero() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-balance"
           >
-            {t("title")}
+            Premium & Custom WordPress Plugins
+            <br />
+            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Built for Success
+            </span>
           </motion.h1>
 
           <motion.p
@@ -47,7 +49,8 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mb-8 text-lg text-muted-foreground md:text-xl text-balance max-w-2xl mx-auto"
           >
-            {t("subtitle")}
+            Transform your WordPress site with our collection of premium plugins.
+            Professional features, exceptional support, and regular updates guaranteed.
           </motion.p>
 
           <motion.div
@@ -58,13 +61,13 @@ export function Hero() {
           >
             <Button size="lg" className="w-full sm:w-auto group" asChild>
               <Link href="/plugins">
-                {t("cta")}
+                Browse All Plugins
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
               <Link href="/pricing">
-                {t("viewPricing")}
+                View Pricing
               </Link>
             </Button>
           </motion.div>

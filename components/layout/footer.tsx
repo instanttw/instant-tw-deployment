@@ -2,11 +2,60 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Facebook, Twitter, Linkedin, Youtube, Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { CookieSettingsLink } from "@/components/cookie-consent/cookie-settings-link";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
+
+// Temporary fallback translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    tagline: "Premium WordPress plugins built for success. Transform your website with professional features, exceptional support, and regular updates.",
+    description: "Transform your WordPress site with our premium plugins and services. Professional features, exceptional support, and regular updates.",
+    products: "Products",
+    services: "Services",
+    resources: "Resources",
+    company: "Company",
+    allPlugins: "All Plugins",
+    seoTools: "SEO Tools",
+    ecommerce: "E-Commerce",
+    security: "Security",
+    pricing: "Pricing",
+    wpScan: "WP Scan",
+    maintenancePlans: "Maintenance Plans",
+    speedOptimization: "Speed Optimization",
+    securityServices: "Security Services",
+    seoServices: "SEO Services",
+    managedHosting: "Managed Hosting",
+    customThemes: "Custom Themes",
+    documentation: "Documentation",
+    blog: "Blog",
+    support: "Support",
+    changelog: "Changelog",
+    roadmap: "Roadmap",
+    api: "API",
+    aboutUs: "About Us",
+    contact: "Contact",
+    careers: "Careers",
+    partners: "Partners",
+    affiliates: "Affiliates",
+    copyright: "© 2025 Instant. All rights reserved.",
+    privacy: "Privacy Policy",
+    terms: "Terms of Service",
+    refund: "Refund Policy",
+    trustedPayments: "Trusted Payment Methods:",
+    sslSecured: "SSL Secured",
+    gdprCompliant: "GDPR Compliant",
+    pciDss: "PCI DSS Level 1",
+    uptime: "99.9% Uptime",
+    moneyBack: "Money Back Guarantee",
+    support247: "24/7 Support",
+  };
+  return translations[key] || key;
+};
 
 export function Footer() {
-  const t = useTranslations("footer");
+  const t = mockT; // Use mock translations
   return (
     <footer className="border-t bg-secondary/10">
       <div className="container mx-auto px-4 py-12">
@@ -18,6 +67,33 @@ export function Footer() {
             <p className="text-sm text-muted-foreground mb-4 max-w-sm">
               {t("tagline")}
             </p>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="#" aria-label="Facebook">
+                  <Facebook className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="#" aria-label="Twitter">
+                  <Twitter className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="#" aria-label="LinkedIn">
+                  <Linkedin className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="#" aria-label="YouTube">
+                  <Youtube className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="#" aria-label="GitHub">
+                  <Github className="h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
           </div>
 
           <div>
@@ -75,11 +151,9 @@ export function Footer() {
               <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">{t("privacy")}</Link>
               <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">{t("terms")}</Link>
               <Link href="/refund-policy" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t("refundPolicy")}
+                Refund Policy
               </Link>
-              <button onClick={() => {}} className="text-muted-foreground hover:text-foreground transition-colors">
-                {t("cookieSettings")}
-              </button>
+              <CookieSettingsLink />
             </div>
           </div>
 

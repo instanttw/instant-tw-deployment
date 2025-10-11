@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,19 +16,26 @@ const languages = [
   { code: "fr", name: "Français" },
   { code: "de", name: "Deutsch" },
   { code: "ar", name: "العربية" },
-  { code: "pt", name: "Português" },
+  { code: "pt-BR", name: "Português (Brasil)" },
   { code: "it", name: "Italiano" },
 ];
 
 export function LanguageSwitcher() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const currentLocale = useLocale();
-  const [locale, setLocale] = useState(currentLocale);
+  const [locale, setLocale] = useState("en");
 
   useEffect(() => {
-    setLocale(currentLocale);
-  }, [currentLocale]);
+    try {
+      const stored = localStorage.getItem('preferred-locale');
+      if (stored) {
+        setLocale(stored);
+        return;
+      }
+      const cookie = document.cookie.split('; ').find((c) => c.startsWith('NEXT_LOCALE='));
+      if (cookie) {
+        setLocale(cookie.split('=')[1]);
+      }
+    } catch {}
+  }, []);
 
   return (
     <DropdownMenu>
@@ -46,22 +51,10 @@ export function LanguageSwitcher() {
             key={lang.code}
             onClick={() => {
               try {
-                // Don't do anything if already on this locale
-                if (lang.code === currentLocale) return;
-                
-                // Remove current locale from pathname
-                let newPath = pathname;
-                if (currentLocale !== 'en') {
-                  newPath = pathname.replace(`/${currentLocale}`, '') || '/';
-                }
-                
-                // Add new locale prefix (except for English)
-                if (lang.code !== 'en') {
-                  newPath = `/${lang.code}${newPath === '/' ? '' : newPath}`;
-                }
-                
-                // Navigate to new locale URL
-                router.push(newPath);
+                setLocale(lang.code);
+                document.cookie = `NEXT_LOCALE=${lang.code}; Path=/; Max-Age=31536000; SameSite=Lax`;
+                localStorage.setItem('preferred-locale', lang.code);
+                window.location.reload();
               } catch (e) {
                 console.warn('Locale switch failed', e);
               }

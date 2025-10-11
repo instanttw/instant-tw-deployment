@@ -6,7 +6,19 @@ import Link from "next/link";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { allPlugins } from "@/config/plugins-data";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
+
+// Mock translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    placeholder: "Search plugins, docs, and more...",
+    noResults: "No results found",
+    plugins: "Plugins",
+    docs: "Documentation",
+    services: "Services",
+  };
+  return translations[key] || key;
+};
 
 interface SearchModalProps {
   open: boolean;
@@ -168,7 +180,7 @@ const quickLinks = [
 export function SearchModal({ open, onOpenChange }: SearchModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedResult, setSelectedResult] = useState(0);
-  const t = useTranslations("search");
+  const t = mockT; // Use mock translations
 
   // Reset when modal opens/closes
   useEffect(() => {

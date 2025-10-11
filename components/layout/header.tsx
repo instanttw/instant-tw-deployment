@@ -6,13 +6,33 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Search } from "lucide-react";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { CurrencySwitcher } from "@/components/ui/currency-switcher";
 import { SearchModal } from "@/components/search/search-modal";
 import { UserAvatarMenu } from "@/components/dashboard/user-avatar-menu";
-import { useTranslations } from "@/lib/translations";
+// import { useTranslations } from "next-intl"; // DISABLED
+
+// Temporary fallback translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    wpScan: "WP Scan",
+    hosting: "Hosting",
+    themes: "Themes",
+    plugins: "Plugins",
+    services: "Services",
+    pricing: "Pricing",
+    maintenance: "Maintenance",
+    speedOptimization: "Speed Optimization",
+    security: "Security",
+    seo: "SEO",
+    searchPlaceholder: "Search...",
+    browsePlugins: "Browse Plugins",
+  };
+  return translations[key] || key;
+};
 
 export function Header() {
-  const t = useTranslations("header");
+  const t = mockT; // Use mock translations
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -69,6 +89,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <CurrencySwitcher />
           
           <Button 
@@ -134,6 +155,7 @@ export function Header() {
             </Link>
             <div className="flex flex-col gap-2 pt-4 border-t">
               <div className="flex gap-2">
+                <LanguageSwitcher />
                 <CurrencySwitcher />
               </div>
               <div className="flex">

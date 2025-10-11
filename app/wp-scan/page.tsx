@@ -217,31 +217,6 @@ export default function WPScanPage() {
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'SoftwareApplication',
-            name: 'WP Scan',
-            description: 'Free WordPress vulnerability scanner and security audit tool',
-            applicationCategory: 'SecurityApplication',
-            operatingSystem: 'Web Browser',
-            offers: {
-              '@type': 'Offer',
-              price: '0',
-              priceCurrency: 'USD',
-              availability: 'https://schema.org/InStock',
-            },
-            aggregateRating: {
-              '@type': 'AggregateRating',
-              ratingValue: '4.8',
-              reviewCount: '1250',
-            },
-          }),
-        }}
-      />
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-28 lg:py-36">
@@ -1236,6 +1211,5 @@ export default function WPScanPage() {
         </div>
       </section>
     </div>
-    </>
   );
 }
