@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Book, Search as SearchIcon, FileText, Video, Code, HelpCircle, Shield, Wrench } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
 
 type DocArticle = {
   id: string;
@@ -23,8 +23,27 @@ const slugify = (s: string) =>
     .trim()
     .replace(/\s+/g, "-");
 
+// Mock translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    title: "Documentation",
+    description: "Comprehensive guides and documentation",
+    search: "Search documentation...",
+    popularArticles: "Popular Articles",
+    browseByCategory: "Browse by Category",
+    gettingStarted: "Getting Started",
+    pluginGuides: "Plugin Guides",
+    servicesGuides: "Services Guides",
+    developerResources: "Developer Resources",
+    faqs: "FAQs",
+    troubleshooting: "Troubleshooting",
+    videoTutorials: "Video Tutorials",
+  };
+  return translations[key] || key;
+};
+
 export default function DocumentationPage() {
-  const t = useTranslations("docs");
+  const t = mockT; // Use mock translations
   const serviceGuides: DocArticle[] = [
     {
       id: "guide-service-hosting",

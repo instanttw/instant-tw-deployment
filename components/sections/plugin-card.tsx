@@ -9,7 +9,7 @@ import { formatNumber, formatPrice } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
 import { useCurrency } from "@/lib/currency-context";
 
 interface PluginCardProps {
@@ -17,10 +17,22 @@ interface PluginCardProps {
   index?: number;
 }
 
+// Mock translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    free: "Free",
+    viewDetails: "View Details",
+    getStarted: "Get Started",
+    downloads: "Downloads",
+    rating: "Rating",
+  };
+  return translations[key] || key;
+};
+
 export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { symbol } = useCurrency();
-  const t = useTranslations("plugins");
+  const t = mockT; // Use mock translations
   
   const lowestPrice = plugin.pricing.free 
     ? 0 

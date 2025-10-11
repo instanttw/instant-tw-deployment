@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { useState, useMemo } from "react";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl"; // DISABLED
 import { PluginCard } from "@/components/sections/plugin-card";
 import { featuredPlugins, categories } from "@/config/plugins";
 import { Input } from "@/components/ui/input";
@@ -12,8 +12,26 @@ import { Search } from "lucide-react";
 
 type SortOption = "popular" | "rating" | "newest" | "price-low" | "price-high";
 
+// Mock translations
+const mockT = (key: string) => {
+  const translations: Record<string, string> = {
+    title: "WordPress Plugins",
+    description: "Browse our collection of premium WordPress plugins",
+    search: "Search plugins...",
+    filterBy: "Filter by category",
+    sortBy: "Sort by",
+    allCategories: "All Categories",
+    popular: "Most Popular",
+    rating: "Highest Rated",
+    newest: "Newest First",
+    priceLow: "Price: Low to High",
+    priceHigh: "Price: High to Low",
+  };
+  return translations[key] || key;
+};
+
 export default function PluginsPage() {
-  const t = useTranslations("plugins");
+  const t = mockT; // Use mock translations
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("popular");
