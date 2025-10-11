@@ -1,0 +1,803 @@
+import { Plugin } from "@/types";
+
+export const allPlugins: Plugin[] = [
+  {
+    id: "1",
+    slug: "instant-duplicator",
+    name: "Instant Duplicator",
+    tagline: "Clone everything with one click",
+    description: "The most powerful WordPress duplication plugin. Clone posts, pages, products, categories, and entire sections instantly. Perfect for agencies managing multiple sites or store owners with large catalogs.",
+    icon: "/plugins/duplicator-icon.svg",
+    category: "Productivity",
+    rating: 4.9,
+    totalReviews: 3250,
+    installations: 250000,
+    featured: true,
+    pricing: {
+      free: {
+        price: 0,
+        billingCycle: "monthly",
+        features: [
+          "Duplicate posts and pages",
+          "Clone custom post types",
+          "Basic duplication settings",
+          "1 website",
+          "Community support"
+        ],
+      },
+      pro: {
+        price: 49,
+        billingCycle: "annual",
+        features: [
+          "Everything in Free",
+          "Duplicate WooCommerce products",
+          "Clone product categories & tags",
+          "Bulk duplication (up to 100 items)",
+          "Smart find & replace",
+          "User role permissions",
+          "5 websites",
+          "Priority email support"
+        ],
+      },
+      agency: {
+        price: 149,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Unlimited bulk operations",
+          "Template library with sharing",
+          "Schedule automatic duplications",
+          "Multisite support",
+          "Clone entire menus",
+          "Advanced custom field mapping",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 399,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "White label options",
+          "Custom development",
+          "Dedicated account manager",
+          "24/7 priority support",
+          "SLA guarantee",
+          "On-site training available",
+          "Custom integrations"
+        ],
+      },
+    },
+    screenshots: [
+      "/screenshots/duplicator-1.jpg",
+      "/screenshots/duplicator-2.jpg",
+      "/screenshots/duplicator-3.jpg",
+    ],
+    videoUrl: "https://www.youtube.com/watch?v=example",
+    features: [
+      {
+        title: "One-Click Duplication",
+        description: "Clone any post, page, or product with a single click. No complex settings required.",
+        tier: ["free", "pro", "agency", "enterprise"]
+      },
+      {
+        title: "Bulk Operations",
+        description: "Duplicate hundreds of items at once with smart filtering and batch processing.",
+        tier: ["pro", "agency", "enterprise"]
+      },
+      {
+        title: "Smart Templates",
+        description: "Save items as reusable templates with variable placeholders for rapid content creation.",
+        tier: ["agency", "enterprise"]
+      }
+    ],
+    faqs: [],
+    changelog: [
+      {
+        version: "25.1.0",
+        date: "2025-01-01",
+        changes: ["Added multisite support", "Improved performance for bulk operations", "Fixed compatibility with WooCommerce 8.5"]
+      }
+    ],
+    compatibility: {
+      wordpress: "5.0+",
+      woocommerce: "6.0+"
+    },
+    testimonials: [],
+    relatedPlugins: ["4", "5"]
+  },
+  {
+    id: "2",
+    slug: "instant-speed-optimizer",
+    name: "Instant Speed Optimizer",
+    tagline: "Make your website lightning fast",
+    description: "Optimize your WordPress site speed automatically. Convert images to WebP, enable lazy loading, minify assets, and dramatically improve Core Web Vitals scores without technical knowledge.",
+    icon: "/plugins/speed-icon.svg",
+    category: "Performance",
+    rating: 4.9,
+    totalReviews: 4120,
+    installations: 380000,
+    featured: true,
+    pricing: {
+      pro: {
+        price: 59,
+        billingCycle: "annual",
+        features: [
+          "Auto WebP/AVIF conversion",
+          "Intelligent lazy loading",
+          "Image compression (lossless & lossy)",
+          "Blur-up placeholders",
+          "Core Web Vitals optimization",
+          "Before/after speed reports",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 179,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "CDN integration",
+          "Advanced caching rules",
+          "Database optimization",
+          "Critical CSS generation",
+          "Font optimization",
+          "Unlimited websites",
+          "White label reports"
+        ],
+      },
+      enterprise: {
+        price: 449,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom optimization rules",
+          "Dedicated support engineer",
+          "Performance monitoring",
+          "24/7 support",
+          "Custom integrations",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.5+" },
+    testimonials: [],
+    relatedPlugins: ["5", "10"]
+  },
+  {
+    id: "3",
+    slug: "instant-security-guard",
+    name: "Instant Security Guard",
+    tagline: "Enterprise-grade WordPress security",
+    description: "Protect your WordPress site from malware, hackers, and security threats. Real-time monitoring, automatic malware scanning, firewall protection, and one-click security hardening.",
+    icon: "/plugins/security-icon.svg",
+    category: "Security",
+    rating: 4.9,
+    totalReviews: 2890,
+    installations: 320000,
+    featured: true,
+    pricing: {
+      pro: {
+        price: 69,
+        billingCycle: "annual",
+        features: [
+          "Real-time malware scanning",
+          "Advanced firewall protection",
+          "Login attempt monitoring",
+          "File change detection",
+          "Two-factor authentication",
+          "Security hardening wizard",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 199,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Country blocking",
+          "Advanced threat detection",
+          "Automated security reports",
+          "Security badge for clients",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 499,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Security audits",
+          "Penetration testing",
+          "Compliance assistance",
+          "24/7 security monitoring",
+          "Dedicated security team",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.5+" },
+    testimonials: [],
+    relatedPlugins: ["11", "10"]
+  },
+  {
+    id: "4",
+    slug: "instant-seo",
+    name: "Instant SEO",
+    tagline: "Boost your rankings effortlessly",
+    description: "Complete SEO solution for WordPress. Advanced schema markup, social media optimization, XML sitemaps, redirect manager, and detailed analytics to help you rank higher in search engines.",
+    icon: "/plugins/seo-icon.svg",
+    category: "SEO",
+    rating: 4.8,
+    totalReviews: 5200,
+    installations: 450000,
+    featured: true,
+    pricing: {
+      pro: {
+        price: 79,
+        billingCycle: "annual",
+        features: [
+          "Advanced SEO analysis",
+          "Schema markup automation",
+          "Social media optimization",
+          "XML sitemap generation",
+          "Redirect manager (301, 302, 307)",
+          "Internal linking suggestions",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 229,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "White label SEO reports",
+          "Local SEO optimization",
+          "Advanced analytics dashboard",
+          "Competitor analysis",
+          "API access for automation",
+          "Unlimited websites",
+          "Dedicated support"
+        ],
+      },
+      enterprise: {
+        price: 549,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom schema development",
+          "SEO audit services",
+          "Content optimization AI",
+          "Priority feature requests",
+          "24/7 support",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["2", "9"]
+  },
+  {
+    id: "5",
+    slug: "instant-woocommerce-boost",
+    name: "Instant WooCommerce Boost",
+    tagline: "Supercharge your online store",
+    description: "Essential WooCommerce extensions to increase sales. Advanced product filters, quick view popups, wishlist functionality, abandoned cart recovery, and conversion optimization tools.",
+    icon: "/plugins/woo-icon.svg",
+    category: "E-Commerce",
+    rating: 4.8,
+    totalReviews: 3450,
+    installations: 180000,
+    featured: true,
+    pricing: {
+      pro: {
+        price: 89,
+        billingCycle: "annual",
+        features: [
+          "Advanced product filters",
+          "Quick view popup",
+          "Wishlist functionality",
+          "Product comparison table",
+          "Stock notifications",
+          "Recently viewed products",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 259,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Abandoned cart recovery",
+          "Custom checkout fields",
+          "Advanced analytics dashboard",
+          "Email marketing automation",
+          "Bulk discount rules",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 649,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom feature development",
+          "Sales funnel optimization",
+          "A/B testing tools",
+          "Dedicated success manager",
+          "24/7 support",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.5+", woocommerce: "6.0+" },
+    testimonials: [],
+    relatedPlugins: ["1", "4"]
+  },
+  {
+    id: "6",
+    slug: "instant-backup",
+    name: "Instant Backup",
+    tagline: "Never lose your website data",
+    description: "Automated WordPress backups with one-click restore. Schedule backups to cloud storage (Dropbox, Google Drive, S3), version history, and disaster recovery tools.",
+    icon: "/plugins/backup-icon.svg",
+    category: "Backup",
+    rating: 4.9,
+    totalReviews: 2150,
+    installations: 290000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 49,
+        billingCycle: "annual",
+        features: [
+          "Automated scheduled backups",
+          "Cloud storage integration",
+          "One-click restore",
+          "Incremental backups",
+          "Email notifications",
+          "30-day backup retention",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 149,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Real-time backups",
+          "90-day backup retention",
+          "Database optimization",
+          "White label reports",
+          "Multisite support",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 399,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Unlimited backup retention",
+          "Dedicated storage server",
+          "24/7 disaster recovery",
+          "Custom backup rules",
+          "SLA guarantee",
+          "Dedicated support team"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["3", "11"]
+  },
+  {
+    id: "7",
+    slug: "instant-cache",
+    name: "Instant Cache",
+    tagline: "Ultimate caching solution",
+    description: "Advanced caching plugin for WordPress. Page caching, object caching, database caching, and browser caching with Redis and Memcached support for maximum performance.",
+    icon: "/plugins/cache-icon.svg",
+    category: "Performance",
+    rating: 4.8,
+    totalReviews: 1890,
+    installations: 210000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 59,
+        billingCycle: "annual",
+        features: [
+          "Page caching",
+          "Object caching",
+          "Database query caching",
+          "Browser caching",
+          "Cache preloading",
+          "Mobile device detection",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 179,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Redis & Memcached support",
+          "Advanced cache rules",
+          "CDN integration",
+          "Cache warmup automation",
+          "WooCommerce optimization",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 449,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom cache strategies",
+          "Load balancer support",
+          "Performance monitoring",
+          "24/7 support",
+          "Dedicated engineer",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.5+" },
+    testimonials: [],
+    relatedPlugins: ["2", "10"]
+  },
+  {
+    id: "8",
+    slug: "instant-content-protector",
+    name: "Instant Content Protector",
+    tagline: "Stop content theft",
+    description: "Protect your content from being copied. Disable right-click, prevent text selection, add watermarks to images, encrypt RSS feeds, and detect stolen content across the web.",
+    icon: "/plugins/protect-icon.svg",
+    category: "Security",
+    rating: 4.7,
+    totalReviews: 1650,
+    installations: 120000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 39,
+        billingCycle: "annual",
+        features: [
+          "Disable right-click & text selection",
+          "Image watermarking",
+          "RSS feed protection",
+          "Content theft detection",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 119,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "DMCA takedown generator",
+          "Advanced hotlink protection",
+          "Custom watermark templates",
+          "White label protection notices",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 299,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Legal assistance",
+          "Automated DMCA filing",
+          "Content monitoring service",
+          "24/7 support",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["3", "4"]
+  },
+  {
+    id: "9",
+    slug: "instant-broken-link-fixer",
+    name: "Instant Broken Link Fixer",
+    tagline: "Auto-detect and repair broken links",
+    description: "Find and fix broken links automatically. Scans all internal and external links, auto-fixes internal broken links, suggests replacements, and monitors for new issues in real-time.",
+    icon: "/plugins/link-icon.svg",
+    category: "SEO",
+    rating: 4.8,
+    totalReviews: 2340,
+    installations: 160000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 49,
+        billingCycle: "annual",
+        features: [
+          "Automatic link scanning",
+          "Auto-fix internal broken links",
+          "301 redirect manager",
+          "External link monitoring",
+          "Link health dashboard",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 149,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Wayback Machine integration",
+          "Bulk link editing",
+          "White label reports",
+          "SEO impact analysis",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 399,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom link rules",
+          "API access",
+          "Dedicated support",
+          "24/7 monitoring",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["4", "2"]
+  },
+  {
+    id: "10",
+    slug: "instant-database-optimizer",
+    name: "Instant Database Optimizer",
+    tagline: "Clean and speed up your database",
+    description: "Optimize your WordPress database with one click. Remove revisions, spam, orphaned data, and expired transients. Schedule automatic cleanups and monitor database health.",
+    icon: "/plugins/database-icon.svg",
+    category: "Performance",
+    rating: 4.9,
+    totalReviews: 1980,
+    installations: 230000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 39,
+        billingCycle: "annual",
+        features: [
+          "One-click optimization",
+          "Remove post revisions",
+          "Clean spam & trash",
+          "Delete expired transients",
+          "Database health score",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 119,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Scheduled auto-cleanup",
+          "Advanced optimization rules",
+          "Table repair & optimization",
+          "Backup before optimization",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 299,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom optimization scripts",
+          "Database monitoring",
+          "Performance analytics",
+          "24/7 support",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["2", "7"]
+  },
+  {
+    id: "11",
+    slug: "instant-uptime-monitor",
+    name: "Instant Uptime Monitor",
+    tagline: "Never miss downtime again",
+    description: "24/7 uptime monitoring with instant notifications. Auto-diagnose issues, one-click recovery, status page generator, and detailed uptime reports to keep your site running smoothly.",
+    icon: "/plugins/uptime-icon.svg",
+    category: "Monitoring",
+    rating: 4.9,
+    totalReviews: 2560,
+    installations: 175000,
+    featured: false,
+    pricing: {
+      pro: {
+        price: 59,
+        billingCycle: "annual",
+        features: [
+          "Uptime monitoring (5-min checks)",
+          "Instant email notifications",
+          "Auto-diagnosis tools",
+          "Response time tracking",
+          "Downtime reports",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 179,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "1-minute check intervals",
+          "SMS & push notifications",
+          "One-click recovery mode",
+          "Public status pages",
+          "White label reports",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 449,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "30-second check intervals",
+          "Multi-location monitoring",
+          "Custom recovery scripts",
+          "24/7 incident response",
+          "Dedicated support team",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["3", "6"]
+  },
+  {
+    id: "12",
+    slug: "instant-form-builder",
+    name: "Instant Form Builder",
+    tagline: "Create beautiful forms instantly",
+    description: "Drag-and-drop form builder with advanced features. Conditional logic, payment integration, file uploads, multi-page forms, and detailed analytics to capture and convert leads.",
+    icon: "/plugins/form-icon.svg",
+    category: "Forms",
+    rating: 4.8,
+    totalReviews: 3890,
+    installations: 340000,
+    featured: true,
+    pricing: {
+      pro: {
+        price: 59,
+        billingCycle: "annual",
+        features: [
+          "Drag & drop builder",
+          "Unlimited forms & fields",
+          "Conditional logic",
+          "File uploads",
+          "Email notifications",
+          "Spam protection",
+          "5 websites",
+          "Priority support"
+        ],
+      },
+      agency: {
+        price: 179,
+        billingCycle: "annual",
+        features: [
+          "Everything in Pro",
+          "Payment integration (Stripe, PayPal)",
+          "Multi-page forms",
+          "Advanced calculations",
+          "Form templates library",
+          "White label options",
+          "Unlimited websites",
+          "Priority phone support"
+        ],
+      },
+      enterprise: {
+        price: 449,
+        billingCycle: "annual",
+        features: [
+          "Everything in Agency",
+          "Custom field types",
+          "Advanced integrations",
+          "HIPAA compliance",
+          "Dedicated support",
+          "24/7 assistance",
+          "SLA guarantee"
+        ],
+      },
+    },
+    screenshots: [],
+    features: [],
+    faqs: [],
+    changelog: [],
+    compatibility: { wordpress: "5.0+" },
+    testimonials: [],
+    relatedPlugins: ["5", "4"]
+  }
+];
+
+export const featuredPlugins = allPlugins.filter(p => p.featured);
+export const categories = [
+  { id: "performance", name: "Performance", slug: "performance", pluginCount: 3 },
+  { id: "security", name: "Security", slug: "security", pluginCount: 2 },
+  { id: "seo", name: "SEO", slug: "seo", pluginCount: 2 },
+  { id: "ecommerce", name: "E-Commerce", slug: "e-commerce", pluginCount: 1 },
+  { id: "productivity", name: "Productivity", slug: "productivity", pluginCount: 1 },
+  { id: "backup", name: "Backup", slug: "backup", pluginCount: 1 },
+  { id: "forms", name: "Forms", slug: "forms", pluginCount: 1 },
+  { id: "monitoring", name: "Monitoring", slug: "monitoring", pluginCount: 1 },
+];

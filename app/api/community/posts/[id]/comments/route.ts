@@ -15,19 +15,21 @@ async function ensureTables() {
   `;
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
   await ensureTables();
-  const id = Number(params.id);
+  const { id: idParam } = await context.params;
+  const id = Number(idParam);
   const res = await sql`SELECT id, post_id, content, created_at FROM community_comments WHERE post_id = ${id} ORDER BY created_at ASC`;
   return NextResponse.json({ comments: res.rows }, { status: 200 });
 }
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     await ensureTables();
-    const id = Number(params.id);
+    const { id: idParam } = await context.params;
+    const id = Number(idParam);
     const { content } = await req.json();
     if (!content) return NextResponse.json({ error: "Content required" }, { status: 400 });
     await sql`INSERT INTO community_comments (post_id, user_id, content) VALUES (${id}, ${session.user.id}, ${content})`;

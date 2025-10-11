@@ -1,0 +1,50 @@
+{
+  "tier1": {
+    "plugins": [
+      "instant-image-optimizer",
+      "instant-broken-link-fixer",
+      "instant-duplicator",
+      "instant-forms",
+      "instant-cache",
+      "instant-popup-master",
+      "instant-ai-writer"
+    ],
+    "pricing": {
+      "pro": {
+        "yearly": 49.99,
+        "monthlyDisplay": 4.99
+      },
+      "agency": {
+        "yearly": 999.99,
+        "monthlyDisplay": 99.99
+      },
+      "enterprise": {
+        "yearly": 4999,
+        "monthlyDisplay": 499.99
+      }
+    }
+  },
+  "tier2": {
+    "plugins": [
+      "instant-security-guard",
+      "instant-seo",
+      "instant-backup",
+      "instant-review-booster",
+      "instant-cart-recovery"
+    ],
+    "pricing": {
+      "pro": {
+        "yearly": 69.99,
+        "monthlyDisplay": 6.99
+      },
+      "agency": {
+        "yearly": 1099.99,
+        "monthlyDisplay": 109.99
+      },
+      "enterprise": {
+        "yearly": 6999,
+        "monthlyDisplay": 699.99
+      }
+    }
+  }
+}

@@ -213,8 +213,8 @@ export const authOptions: NextAuthOptions = {
           // Ensure we have an email; WordPress.com may not always return one
           let email = user.email as string | undefined;
           if (account?.provider === "wordpress" && !email) {
-            const providerId = (account?.providerAccountId || profile?.ID || profile?.id)?.toString?.();
-            const base = (profile?.username || profile?.display_name || "wpuser")
+            const providerId = (account?.providerAccountId || (profile as any)?.ID || (profile as any)?.id)?.toString?.();
+            const base = ((profile as any)?.username || (profile as any)?.display_name || "wpuser")
               .toString()
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, ".")
@@ -225,8 +225,8 @@ export const authOptions: NextAuthOptions = {
             user.email = email;
           }
           if (account?.provider === "google" && !email) {
-            const providerId = (account?.providerAccountId || profile?.sub || profile?.id)?.toString?.();
-            const base = (profile?.name || profile?.given_name || "googleuser")
+            const providerId = (account?.providerAccountId || (profile as any)?.sub || (profile as any)?.id)?.toString?.();
+            const base = ((profile as any)?.name || (profile as any)?.given_name || "googleuser")
               .toString()
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, ".")
@@ -256,7 +256,7 @@ export const authOptions: NextAuthOptions = {
               // User exists, update their info if needed
               const dbUser = existingUser.rows[0];
               user.id = dbUser.id;
-              user.role = dbUser.role || 'user';
+              user.role = dbUser.role || 'customer';
               
               console.log(`✅ Existing OAuth user found:`, {
                 id: dbUser.id,
@@ -288,7 +288,7 @@ export const authOptions: NextAuthOptions = {
               VALUES (
                 ${email},
                 ${user.name || email.split('@')[0]},
-                'user',
+                'customer',
                 NOW(),
                 NOW()
               )
@@ -298,7 +298,7 @@ export const authOptions: NextAuthOptions = {
             if (newUser.rows.length > 0) {
               const createdUser = newUser.rows[0];
               user.id = createdUser.id;
-              user.role = createdUser.role;
+              user.role = createdUser.role || 'customer';
               console.log('✅ New OAuth user created:', {
                 id: createdUser.id,
                 email: email,
@@ -349,7 +349,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as any;
         console.log('📝 Session created:', {
           id: session.user.id,
           email: session.user.email,
