@@ -20,7 +20,7 @@
     "title": "Transformez Votre Site WordPress",
     "subtitle": "Plugins premium conçus pour la performance, la sécurité et la facilité d'utilisation",
     "cta": "Explorer les Plugins"
-  },
+  ,    "viewPricing": "View Pricing"},
   "plugins": {
     "title": "Tous les Plugins",
     "subtitle": "Découvrez le plugin parfait pour votre site WordPress",
@@ -129,3 +129,4 @@
     "welcome": "Bonjour! Je suis là pour vous aider avec des questions sur nos plugins et services. Comment puis-je vous aider aujourd'hui?"
   }
 }
+

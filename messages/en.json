@@ -17,9 +17,10 @@
     "seoServices": "SEO Services"
   },
   "home": {
-    "title": "Transform Your WordPress Site",
-    "subtitle": "Premium plugins built for performance, security, and ease of use",
-    "cta": "Explore Plugins"
+    "title": "Premium & Custom WordPress Plugins Built for Success",
+    "subtitle": "Transform your WordPress site with our collection of premium plugins. Professional features, exceptional support, and regular updates guaranteed.",
+    "cta": "Browse All Plugins",
+    "viewPricing": "View Pricing"
   },
   "plugins": {
     "title": "All Plugins",
