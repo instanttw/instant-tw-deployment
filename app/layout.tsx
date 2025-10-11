@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getLocale } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -44,8 +45,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Get locale from next-intl
+  // Get locale and messages from next-intl (defaults to 'en')
   const locale = await getLocale();
+  const messages = await getMessages();
   
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
@@ -64,21 +66,23 @@ export default async function RootLayout({
             `,
           }}
         />
-        <AuthProvider>
-          <CartProvider>
-            <CookieConsentProvider>
-              <CurrencyProvider>
-                <Header />
-                <main>{children}</main>
-                <Footer />
-                <FloatingChatbot />
-                <CookieBanner />
-                <CartSidebar />
-                <Toaster position="top-right" richColors />
-              </CurrencyProvider>
-            </CookieConsentProvider>
-          </CartProvider>
-        </AuthProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider>
+            <CartProvider>
+              <CookieConsentProvider>
+                <CurrencyProvider>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                  <FloatingChatbot />
+                  <CookieBanner />
+                  <CartSidebar />
+                  <Toaster position="top-right" richColors />
+                </CurrencyProvider>
+              </CookieConsentProvider>
+            </CartProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
