@@ -91,7 +91,6 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                   <CardTitle>Get Started</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {/* Download Free Button - Always shown if freeDownloadUrl exists */}
                   {plugin.freeDownloadUrl && (
                     <Button 
                       className="w-full" 
@@ -109,7 +108,6 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                       </a>
                     </Button>
                   )}
-                  {/* Buy Pro Button - Shown if Pro pricing exists */}
                   {plugin.pricing.pro && (
                     <UnifiedCheckoutButton
                       productSlug={plugin.slug}
@@ -285,109 +283,6 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                     </div>
                     <div className="font-medium">{feature}</div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Screenshots</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Dashboard Overview",
-                description: "Clean and intuitive admin interface",
-              },
-              {
-                title: "Settings Panel",
-                description: "Comprehensive configuration options",
-              },
-              {
-                title: "Frontend Display",
-                description: "Beautiful user-facing design",
-              },
-              {
-                title: "Mobile View",
-                description: "Fully responsive across all devices",
-              },
-            ].map((screenshot, index) => (
-              <Card key={index}>
-                <CardContent className="p-0">
-                  <div className="aspect-video bg-secondary/30 flex items-center justify-center rounded-t-lg">
-                    <div className="text-4xl font-bold text-muted-foreground opacity-20">
-                      {plugin.name.substring(0, 2).toUpperCase()}
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-1">{screenshot.title}</h3>
-                    <p className="text-sm text-muted-foreground">{screenshot.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Integrations</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {[
-              "WordPress",
-              "WooCommerce",
-              "Elementor",
-              "Gutenberg",
-              "PayPal",
-              "Stripe",
-              "Mailchimp",
-              "Google Analytics",
-              "Yoast SEO",
-              "Contact Form 7",
-              "WPForms",
-              "Jetpack",
-            ].map((integration, index) => (
-              <Card key={index}>
-                <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
-                  <div className="font-medium text-sm">{integration}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">What Our Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "John Doe",
-                company: "Tech Startup",
-                content: "This plugin saved us countless hours. The features are exactly what we needed.",
-                rating: 5,
-              },
-              {
-                name: "Jane Smith",
-                company: "E-commerce Store",
-                content: "Outstanding support and regular updates. Highly recommended!",
-                rating: 5,
-              },
-              {
-                name: "Mike Johnson",
-                company: "Marketing Agency",
-                content: "Best plugin in its category. Our clients love it.",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <Card key={index}>
-                <CardContent className="pt-6">
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">&quot;{testimonial.content}&quot;</p>
-                  <div className="font-semibold">{testimonial.name}</div>
-                  <div className="text-sm text-muted-foreground">{testimonial.company}</div>
                 </CardContent>
               </Card>
             ))}

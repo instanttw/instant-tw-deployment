@@ -2,7 +2,6 @@
 export const dynamic = "force-dynamic";
 
 import { useState, useMemo } from "react";
-// import { useTranslations } from "next-intl"; // DISABLED
 import { PluginCard } from "@/components/sections/plugin-card";
 import { featuredPlugins, categories } from "@/config/plugins";
 import { Input } from "@/components/ui/input";
@@ -12,26 +11,7 @@ import { Search } from "lucide-react";
 
 type SortOption = "popular" | "rating" | "newest" | "price-low" | "price-high";
 
-// Mock translations
-const mockT = (key: string) => {
-  const translations: Record<string, string> = {
-    title: "WordPress Plugins",
-    description: "Browse our collection of premium WordPress plugins",
-    search: "Search plugins...",
-    filterBy: "Filter by category",
-    sortBy: "Sort by",
-    allCategories: "All Categories",
-    popular: "Most Popular",
-    rating: "Highest Rated",
-    newest: "Newest First",
-    priceLow: "Price: Low to High",
-    priceHigh: "Price: High to Low",
-  };
-  return translations[key] || key;
-};
-
 export default function PluginsPage() {
-  const t = mockT; // Use mock translations
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("popular");
@@ -86,8 +66,8 @@ export default function PluginsPage() {
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
-          <p className="text-lg text-muted-foreground">{t("subtitle")}</p>
+          <h1 className="text-4xl font-bold mb-4">WordPress Plugins</h1>
+          <p className="text-lg text-muted-foreground">Browse our collection of premium WordPress plugins</p>
         </div>
 
         <div className="mb-8">
@@ -96,7 +76,7 @@ export default function PluginsPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder={t("search")}
+                placeholder="Search plugins..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -123,7 +103,7 @@ export default function PluginsPage() {
               size="sm"
               onClick={() => setSelectedCategory(null)}
             >
-              {t("allCategories")}
+              All Categories
             </Button>
             {categories.map((category) => (
               <Button
@@ -141,8 +121,6 @@ export default function PluginsPage() {
           </div>
         </div>
 
-        <div className="mb-6 text-sm text-muted-foreground">{t("showing", { count: filteredPlugins.length })}</div>
-
         {filteredPlugins.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredPlugins.map((plugin, index) => (
@@ -151,7 +129,7 @@ export default function PluginsPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">{t("noResults")}</p>
+            <p className="text-muted-foreground">No plugins found</p>
             <Button
               variant="outline"
               className="mt-4"
@@ -160,7 +138,7 @@ export default function PluginsPage() {
                 setSelectedCategory(null);
               }}
             >
-              {t("clearFilters")}
+              Clear Filters
             </Button>
           </div>
         )}

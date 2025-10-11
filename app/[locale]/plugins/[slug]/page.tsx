@@ -8,7 +8,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PluginDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PluginDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const { slug } = await params;
   const plugin = featuredPlugins.find((p) => p.slug === slug);
 
