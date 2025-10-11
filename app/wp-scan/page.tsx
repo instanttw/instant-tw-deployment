@@ -11,7 +11,6 @@ import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
 import Link from "next/link";
 import { useCurrency } from "@/lib/currency-context";
 import { useSession } from "next-auth/react";
-import { NextSeo } from 'next-seo';
 // WordPress detection now handled by server-side API
 export interface WordPressDetectionResult {
   isWordPress: boolean;
@@ -219,22 +218,6 @@ export default function WPScanPage() {
 
   return (
     <>
-      <NextSeo
-        title="WP Scan - Free WordPress Vulnerability Scanner & Security Audit"
-        description="Free WordPress vulnerability scanner. Instantly scan your WordPress site for security issues, outdated plugins, themes, and core vulnerabilities. Get comprehensive security reports with actionable insights."
-        canonical="https://wp.instant.tw/wp-scan"
-        openGraph={{
-          url: 'https://wp.instant.tw/wp-scan',
-          title: 'WP Scan - Free WordPress Vulnerability Scanner',
-          description: 'Scan your WordPress site for security vulnerabilities, outdated plugins, and themes. Get instant security reports and protect your website.',
-        }}
-        additionalMetaTags={[
-          {
-            name: 'keywords',
-            content: 'WordPress vulnerability scanner, WordPress security scanner, WP security audit, WordPress malware scanner, WordPress security check, scan WordPress site',
-          },
-        ]}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

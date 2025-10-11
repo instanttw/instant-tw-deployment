@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { useCurrency } from "@/lib/currency-context";
 import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
-import { NextSeo } from 'next-seo';
 import { ServiceSchema } from '@/components/seo/service-schema';
 
 export default function HostingPage() {
@@ -161,23 +160,6 @@ export default function HostingPage() {
 
   return (
     <>
-      <NextSeo
-        title="WordPress Hosting Services - Fast, Secure & Managed Hosting"
-        description="Premium managed WordPress hosting with blazing-fast speeds, automatic backups, and expert support. Optimized infrastructure for maximum performance. Starting at $29/month."
-        canonical="https://wp.instant.tw/services/hosting"
-        openGraph={{
-          type: 'product.group',
-          url: 'https://wp.instant.tw/services/hosting',
-          title: 'WordPress Hosting Services - Managed & Optimized',
-          description: 'Fast, secure, and reliable WordPress hosting with expert management and support.',
-        }}
-        additionalMetaTags={[
-          {
-            name: 'keywords',
-            content: 'WordPress hosting, managed WordPress hosting, fast WordPress hosting, WordPress hosting services, premium WordPress hosting, WordPress cloud hosting',
-          },
-        ]}
-      />
       <ServiceSchema
         name="WordPress Hosting Services"
         description="Premium managed WordPress hosting with blazing-fast speeds, automatic backups, expert support, and 99.9% uptime SLA. Optimized infrastructure specifically designed for WordPress performance and security."

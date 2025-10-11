@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { useCurrency } from "@/lib/currency-context";
 import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
-import { NextSeo } from 'next-seo';
 import { ServiceSchema } from '@/components/seo/service-schema';
 
 export default function SecurityServicesPage() {
@@ -125,23 +124,6 @@ export default function SecurityServicesPage() {
 
   return (
     <>
-      <NextSeo
-        title="WordPress Security Services - Malware Protection & 24/7 Monitoring"
-        description="Comprehensive WordPress security services including malware scanning, firewall protection, security hardening, and 24/7 monitoring. Protect your site from hackers and threats. Starting at $99/month."
-        canonical="https://wp.instant.tw/services/security"
-        openGraph={{
-          type: 'product.group',
-          url: 'https://wp.instant.tw/services/security',
-          title: 'WordPress Security Services - Professional Protection',
-          description: 'Protect your WordPress site with professional security services. 24/7 monitoring, malware removal, and advanced firewall protection.',
-        }}
-        additionalMetaTags={[
-          {
-            name: 'keywords',
-            content: 'WordPress security services, WordPress malware removal, WordPress security monitoring, WordPress firewall protection, WordPress security hardening, WordPress security audit',
-          },
-        ]}
-      />
       <ServiceSchema
         name="WordPress Security Services"
         description="Comprehensive WordPress security services including malware scanning, firewall protection, security hardening, and 24/7 monitoring to protect your website from hackers, malware, and security threats."

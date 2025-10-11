@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
-import { NextSeo } from 'next-seo';
 
 type SortOption = "popular" | "rating" | "newest" | "price-low" | "price-high";
 
@@ -85,22 +84,6 @@ export default function PluginsPage() {
 
   return (
     <>
-      <NextSeo
-        title="WordPress Plugins - Premium Collection for Your Website"
-        description="Browse our collection of 8+ premium WordPress plugins. Image optimization, security, forms, SEO, broken link checker, and more. Trusted by 580,000+ installations worldwide. Free versions available."
-        canonical="https://wp.instant.tw/plugins"
-        openGraph={{
-          url: 'https://wp.instant.tw/plugins',
-          title: 'Premium WordPress Plugins - Powerful Features for Your Site',
-          description: 'Discover our collection of premium WordPress plugins to enhance your website.',
-        }}
-        additionalMetaTags={[
-          {
-            name: 'keywords',
-            content: 'WordPress plugins, premium plugins, WP plugins collection, best WordPress plugins, WordPress plugin bundle',
-          },
-        ]}
-      />
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="mb-8">
