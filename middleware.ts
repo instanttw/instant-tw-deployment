@@ -5,21 +5,36 @@ const i18nMiddleware = createMiddleware({
   locales: ["en", "es", "fr", "de", "ar", "pt-BR", "it"],
   defaultLocale: "en",
   localePrefix: "as-needed",
-  localeDetection: true,
+  localeDetection: false, // Disable automatic detection to prevent issues
 });
 
 export default function middleware(request: NextRequest) {
-  // Bypass i18n middleware for RSC prefetch requests to avoid 404s
-  // Next.js uses ?_rsc= for segment prefetch; also respect RSC header when present
-  const url = request.nextUrl;
-  if (url.searchParams.has("_rsc") || request.headers.get("RSC") === "1") {
+  const { pathname, search } = request.nextUrl;
+  
+  // Skip middleware entirely for RSC requests
+  if (search.includes('_rsc=') || request.headers.get('RSC')) {
     return NextResponse.next();
   }
+  
+  // Skip middleware for Next.js internal routes
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api') ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next();
+  }
+
   return i18nMiddleware(request);
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next|.*\\..*|favicon.ico|robots.txt|sitemap.xml).*)",
-  ],
+    // Match all pathnames except for:
+    // - API routes (/api)
+    // - _next static files
+    // - _next image optimization files
+    // - favicon, robots, sitemap
+    // - files with extensions (e.g. .jpg, .png)
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)"],
 };
