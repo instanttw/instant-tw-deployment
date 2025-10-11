@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
 
-export const locales = ['en', 'es', 'fr', 'de', 'ar', 'pt-BR', 'it'] as const;
+export const locales = ['en', 'es', 'fr', 'de', 'ar', 'pt', 'it'] as const;
 export type Locale = (typeof locales)[number];
 
 export const localeNames: Record<Locale, string> = {
@@ -9,7 +9,7 @@ export const localeNames: Record<Locale, string> = {
   fr: 'Français',
   de: 'Deutsch',
   ar: 'العربية',
-  'pt-BR': 'Português (Brasil)',
+  pt: 'Português',
   it: 'Italiano',
 };
 
