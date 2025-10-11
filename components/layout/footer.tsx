@@ -104,9 +104,11 @@ export function Footer() {
               <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">{t("privacy")}</Link>
               <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">{t("terms")}</Link>
               <Link href="/refund-policy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Refund Policy
+                {t("refundPolicy")}
               </Link>
-              <CookieSettingsLink />
+              <button onClick={() => {}} className="text-muted-foreground hover:text-foreground transition-colors">
+                {t("cookieSettings")}
+              </button>
             </div>
           </div>
 

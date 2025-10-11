@@ -14,7 +14,8 @@ export const config = {
   // - Next.js internals (/_next, /_vercel)
   // - Static files (images, fonts, etc.)
   // - Auth/protected routes (/login, /signup, /dashboard, /admin, /checkout)
+  // - WP Scan routes (/wp-scan) - handled separately
   matcher: [
-    '/((?!api|_next|_vercel|login|signup|dashboard|admin|checkout|.*\\..*).*)',
+    '/((?!api|_next|_vercel|login|signup|dashboard|admin|checkout|wp-scan|.*\\..*).*)',
   ],
 };
