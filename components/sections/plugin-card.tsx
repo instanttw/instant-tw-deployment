@@ -114,15 +114,15 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
             <div>
               {lowestPrice === 0 ? (
                 <div>
-                  <span className="text-2xl font-bold">{t("free")}</span>
+                  <span className="text-xl font-bold">{t("free")}</span>
                   <p className="text-xs text-muted-foreground">
-                    {t("proFrom")} {symbol}{plugin.pricing.pro?.price}/{plugin.pricing.pro?.billingCycle === 'annual' ? t("perYear") : t("perMonth")}
+                    proFrom {symbol}{plugin.pricing.pro?.price}/perYear
                   </p>
                 </div>
               ) : (
                 <div>
-                  <span className="text-xs text-muted-foreground">{t("from")}</span>
-                  <div className="text-2xl font-bold">{symbol}{lowestPrice}</div>
+                  <span className="text-xs text-muted-foreground">from</span>
+                  <div className="text-xl font-bold">{symbol}{lowestPrice}</div>
                 </div>
               )}
             </div>
@@ -137,7 +137,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
                   rel="noopener noreferrer"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  {t("downloadFree")}
+                  downloadFree
                 </a>
               </Button>
             )}
@@ -149,7 +149,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  {t("getPro")}
+                  getPro
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
@@ -157,7 +157,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
             {/* Details Button */}
             <Button asChild variant="ghost" size="sm" className="w-full">
               <Link href={`/plugins/${plugin.slug}`}>
-                {t("viewDetails")}
+                View Details
               </Link>
             </Button>
           </div>

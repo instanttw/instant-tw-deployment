@@ -14,12 +14,22 @@ interface Message {
   timestamp: Date;
 }
 
+const popularQuestions = [
+  "What plugins do you offer?",
+  "How much does it cost?",
+  "How do I install a plugin?",
+  "Do you offer refunds?",
+  "How can I contact support?",
+  "What is your affiliate program?",
+];
+
 export function FloatingChatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(true);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      content: "Hi! I'm here to help you with questions about our plugins and services. How can I assist you today?",
+      content: "Hi! I'm here to help you with questions about our WordPress plugins and services. How can I assist you today?",
       role: "assistant",
       timestamp: new Date(),
     },
@@ -27,6 +37,7 @@ export function FloatingChatbot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -47,19 +58,32 @@ export function FloatingChatbot() {
     };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  // Focus input when chatbot opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [isOpen]);
+
+  const handleQuestionClick = (question: string) => {
+    setShowQuestions(false);
+    handleSubmit(null, question);
+  };
+
+  const handleSubmit = async (e: React.FormEvent | null, quickQuestion?: string) => {
+    if (e) e.preventDefault();
+    const messageContent = quickQuestion || input.trim();
+    if (!messageContent || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: input.trim(),
+      content: messageContent,
       role: "user",
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    if (!quickQuestion) setInput("");
     setIsLoading(true);
 
     try {
@@ -113,23 +137,53 @@ export function FloatingChatbot() {
       return "We offer a 30-day money-back guarantee for first-time customers!\n\n• Full refund within 30 days of purchase\n• No questions asked\n• Contact billing@instant.tw to request\n\nView our complete Refund Policy at https://instant.tw/refund";
     }
 
+    // Pricing queries - enhanced
+    if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("pricing") || lowerQuery.includes("how much")) {
+      return "Our flexible pricing plans:\n\n💎 **Free Plan** - Free\n• Basic features for 1 site\n• Community support\n• Free plugins with limited features\n\n🚀 **Pro Plan** - $49.99/year\n• Up to 3 sites\n• All premium features\n• Priority email support\n• 1-year updates\n\n🏢 **Agency Plan** - $149.99/year\n• Up to 25 sites\n• White-label options\n• Phone + email support\n• Advanced features\n\n🎯 **Enterprise** - Custom pricing\n• Unlimited sites\n• Dedicated account manager\n• Custom integrations\n\n30-day money-back guarantee on all plans!\nView details: https://wp.instant.tw/pricing";
+    }
+
+    // WP Scan specific queries
+    if (lowerQuery.includes("wp scan") || lowerQuery.includes("wpscan") || lowerQuery.includes("security scan") || lowerQuery.includes("malware")) {
+      return "🔒 **WP Scan** - Free WordPress Security Scanner\n\n**What it does:**\n• Scans for malware and vulnerabilities\n• Checks plugins/themes for security issues\n• Monitors file integrity\n• Detects suspicious code\n• Real-time security monitoring\n\n**Features:**\n• Free basic scan (up to 100 pages)\n• Detailed security reports\n• Email notifications\n• API access for developers\n\n**Pro Features:**\n• Unlimited scans\n• Advanced threat detection\n• Automated daily scans\n• Priority support\n\nTry it free: https://wp.instant.tw/wp-scan";
+    }
+
     // Plugin-related queries
     if (lowerQuery.includes("plugin") || lowerQuery.includes("feature")) {
-      if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("pricing")) {
-        return "We offer flexible pricing plans:\n\n• Free Plan: 1 site, basic plugins\n• Pro Plan: $49/year, 5 sites\n• Agency Plan: $149/year, unlimited sites\n• Enterprise: Custom pricing\n\n30-day money-back guarantee on all paid plans. See https://instant.tw/pricing";
-      }
       if (lowerQuery.includes("install") || lowerQuery.includes("setup")) {
         return "Installing our plugins is easy:\n\n1. Download from your account at https://instant.tw/\n2. Go to WordPress Admin → Plugins → Add New\n3. Upload the downloaded file\n4. Activate the plugin\n\nCheck our docs at https://instant.tw/docs for detailed guides.";
       }
       if (lowerQuery.includes("list") || lowerQuery.includes("available") || lowerQuery.includes("which")) {
-        return "Our 12 WordPress plugins include:\n\n• Instant Speed Optimizer\n• Instant Security Guard\n• Instant SEO\n• Instant Woo\n• Instant Cache\n• Instant Database Optimizer\n• Instant Broken Link Fixer\n• Instant Content Protector\n• Instant Duplicator\n• Instant Uptime Monitor\n• Instant Form Builder\n• Instant Slider\n\nView all plugins at https://instant.tw/plugins";
+        return "🔌 **Our WordPress Plugins:**\n\n🏁 **Performance:**\n• Instant Image Optimizer - WebP conversion, lazy loading\n• Instant Cache - Advanced caching solutions\n• Instant Speed Optimizer - Database & code optimization\n\n🔒 **Security:**\n• Instant Security Guard - Malware protection, 2FA\n• Instant Broken Link Fixer - SEO & link health\n\n💼 **E-Commerce:**\n• Instant Duplicator - Clone posts, pages & products\n\n📡 **Forms & Engagement:**\n• Instant Forms - Drag & drop form builder\n\n🎨 **Content:**\n• Instant Backup - Zero downtime recovery\n\nAll plugins include:\n• Regular updates & support\n• 4.9+ star ratings\n• 580K+ active installs\n\nBrowse all: https://wp.instant.tw/plugins";
       }
       return "We offer 12 premium WordPress plugins for performance, security, SEO, and e-commerce. All plugins include regular updates, documentation, and support. Browse at https://instant.tw/plugins";
     }
 
+    // Services queries
+    if (lowerQuery.includes("service") && !lowerQuery.includes("terms")) {
+      if (lowerQuery.includes("hosting")) {
+        return "🌐 **WordPress Hosting Services**\n\n• Managed WordPress hosting\n• 99.9% uptime guarantee\n• Free SSL certificates\n• Daily backups\n• CDN included\n• Expert support\n• One-click staging\n\nStarting at $9.99/month\nLearn more: https://wp.instant.tw/services/hosting";
+      }
+      if (lowerQuery.includes("maintenance")) {
+        return "🔧 **WordPress Maintenance Plans**\n\n• Plugin/theme updates\n• Security monitoring\n• Performance optimization\n• Content updates\n• Backup management\n• Uptime monitoring\n• Monthly reports\n\nStarting at $29/month\nView plans: https://wp.instant.tw/services/maintenance";
+      }
+      if (lowerQuery.includes("speed") || lowerQuery.includes("optimization")) {
+        return "⚡ **Speed Optimization Services**\n\n• Site speed audit\n• Image optimization\n• Caching setup\n• Database cleanup\n• Code minification\n• CDN configuration\n• Mobile optimization\n\nGoal: Sub-2 second load times\nStarting at $199 one-time\nLearn more: https://wp.instant.tw/services/speed-optimization";
+      }
+      if (lowerQuery.includes("security")) {
+        return "🔒 **WordPress Security Services**\n\n• Security hardening\n• Malware removal\n• Firewall setup\n• SSL configuration\n• Login protection\n• Regular scans\n• Security monitoring\n\nStarting at $149 one-time\nSecure your site: https://wp.instant.tw/services/security";
+      }
+      if (lowerQuery.includes("seo")) {
+        return "📊 **SEO Services**\n\n• Technical SEO audit\n• Keyword research\n• Content optimization\n• Schema markup\n• Site structure\n• Performance for SEO\n• Monthly reporting\n\nStarting at $299/month\nBoost rankings: https://wp.instant.tw/services/seo";
+      }
+      if (lowerQuery.includes("theme")) {
+        return "🎨 **Custom Theme Services**\n\n• Custom WordPress themes\n• Responsive design\n• Performance optimized\n• SEO friendly\n• Cross-browser compatible\n• Maintenance included\n• Unlimited revisions\n\nStarting at $1,299\nGet custom theme: https://wp.instant.tw/services/themes";
+      }
+      return "🛠️ **Our Services:**\n\n• WordPress Hosting\n• Maintenance Plans\n• Speed Optimization\n• Security Services\n• SEO Services\n• Custom Themes\n\nAll services include expert support and satisfaction guarantee.\nExplore: https://wp.instant.tw/services";
+    }
+
     // Support queries
     if (lowerQuery.includes("support") || lowerQuery.includes("help") || lowerQuery.includes("assist")) {
-      return "We offer comprehensive support:\n\n• Free Plan: Community forums\n• Pro Plan: Priority email (24h response)\n• Agency Plan: Phone + email (2h response)\n• Enterprise: Dedicated account manager\n\nAverage response time: < 2 hours\nCustomer satisfaction: 97%\n\nVisit https://instant.tw/support or email wp@instant.tw";
+      return "🎆 **Support Options:**\n\n🆓 **Free Plan:**\n• Community forums\n• Knowledge base access\n\n💎 **Pro Plan:**\n• Priority email support\n• 24-hour response time\n• Plugin-specific help\n\n🚀 **Agency Plan:**\n• Phone + email support\n• 2-hour response time\n• Live chat access\n\n🎯 **Enterprise:**\n• Dedicated account manager\n• Custom support SLA\n• Priority development\n\n📊 **Our Stats:**\n• Average response: < 2 hours\n• Customer satisfaction: 97%\n• 24/7 monitoring\n\nGet help: https://wp.instant.tw/support\nEmail: wp@instant.tw";
     }
 
     // Documentation queries
@@ -189,11 +243,11 @@ export function FloatingChatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[90vw] sm:w-96 max-w-md"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed bottom-6 right-6 z-[9999] w-[90vw] h-[90vh] md:w-[420px] md:h-[650px] lg:h-[625px] max-w-[420px]"
           >
-            <Card className="shadow-2xl border-2">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
+            <Card className="h-full flex flex-col shadow-2xl border-2 rounded-2xl overflow-hidden transition-all duration-300">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-2xl shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <MessagesSquare className="h-5 w-5" />
@@ -212,8 +266,8 @@ export function FloatingChatbot() {
                   Ask me anything about our plugins
                 </p>
               </CardHeader>
-              <CardContent className="p-0">
-                <div className="h-[400px] overflow-y-auto p-4 space-y-4">
+              <CardContent className="flex-1 flex flex-col p-0 min-h-0">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ scrollbarWidth: 'thin' }}>
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -238,6 +292,22 @@ export function FloatingChatbot() {
                       </div>
                     </div>
                   ))}
+                  
+                  {/* Popular Questions */}
+                  {showQuestions && messages.length === 1 && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground font-medium mb-2">Popular questions:</p>
+                      {popularQuestions.map((question, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleQuestionClick(question)}
+                          className="w-full text-left text-xs p-2 rounded-md border border-border hover:bg-secondary/50 transition-colors"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   {isLoading && (
                     <div className="flex justify-start">
                       <div className="bg-secondary text-secondary-foreground rounded-lg p-3">
@@ -247,15 +317,21 @@ export function FloatingChatbot() {
                   )}
                   <div ref={messagesEndRef} />
                 </div>
-                <form onSubmit={handleSubmit} className="p-4 border-t">
+                <form onSubmit={handleSubmit} className="p-4 border-t shrink-0 bg-background">
                   <div className="flex gap-2">
                     <Input
+                      ref={inputRef}
                       type="text"
                       placeholder="Type your question..."
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       disabled={isLoading}
                       className="flex-1"
+                      onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                          setIsOpen(false);
+                        }
+                      }}
                     />
                     <Button
                       type="submit"
@@ -286,7 +362,7 @@ export function FloatingChatbot() {
         >
           <button
             onClick={() => setIsOpen(true)}
-            className="group relative flex items-center justify-center w-[60px] h-[60px] rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/50"
+            className="group relative flex items-center justify-center w-[64px] h-[64px] rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/50 backdrop-blur-sm"
             aria-label="Open chat support"
           >
             {/* Pulse ring */}
@@ -319,7 +395,7 @@ export function FloatingChatbot() {
         >
           <button
             onClick={() => setIsOpen(false)}
-            className="flex items-center justify-center w-[60px] h-[60px] rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/50"
+            className="flex items-center justify-center w-[64px] h-[64px] rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/50 backdrop-blur-sm"
             aria-label="Close chat"
           >
             <X className="w-7 h-7 text-white" />

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Twitter, Linkedin, Youtube, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CookieSettingsLink } from "@/components/cookie-consent/cookie-settings-link";
 // import { useTranslations } from "next-intl"; // DISABLED
@@ -67,33 +66,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground mb-4 max-w-sm">
               {t("tagline")}
             </p>
-            <div className="flex gap-2">
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="Facebook">
-                  <Facebook className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="Twitter">
-                  <Twitter className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="LinkedIn">
-                  <Linkedin className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="YouTube">
-                  <Youtube className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="GitHub">
-                  <Github className="h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
           </div>
 
           <div>

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Search } from "lucide-react";
-import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { CurrencySwitcher } from "@/components/ui/currency-switcher";
 import { SearchModal } from "@/components/search/search-modal";
 import { UserAvatarMenu } from "@/components/dashboard/user-avatar-menu";
@@ -89,7 +88,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <LanguageSwitcher />
           <CurrencySwitcher />
           
           <Button 
@@ -155,7 +153,6 @@ export function Header() {
             </Link>
             <div className="flex flex-col gap-2 pt-4 border-t">
               <div className="flex gap-2">
-                <LanguageSwitcher />
                 <CurrencySwitcher />
               </div>
               <div className="flex">
