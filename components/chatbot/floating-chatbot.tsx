@@ -27,6 +27,7 @@ export function FloatingChatbot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,6 +47,20 @@ export function FloatingChatbot() {
       window.removeEventListener("close-chatbot", close as EventListener);
     };
   }, []);
+
+  // Accessibility: focus input when opening and allow Escape to close
+  useEffect(() => {
+    if (!isOpen) return;
+    const to = setTimeout(() => inputRef.current?.focus(), 100);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      clearTimeout(to);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -241,11 +256,11 @@ export function FloatingChatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[90vw] sm:w-96 max-w-md"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed z-[9999] bottom-5 right-5 left-5 sm:left-auto sm:right-6 sm:bottom-6 w-auto"
           >
-            <Card className="shadow-2xl border-2">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
+            <Card className="w-full sm:w-[380px] lg:w-[420px] h-[90vh] sm:h-[80vh] lg:h-[640px] max-h-[92vh] flex flex-col rounded-2xl shadow-xl border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-2xl sticky top-0 z-10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <MessagesSquare className="h-5 w-5" />
@@ -268,8 +283,8 @@ export function FloatingChatbot() {
                   Ask me about plugins, pricing, and support
                 </p>
               </CardHeader>
-              <CardContent className="p-0">
-                <div className="h-[420px] overflow-y-auto p-4 space-y-4">
+              <CardContent className="p-0 flex-1 flex flex-col">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
                   {/* Show preloaded questions only on first load */}
                   {messages.length === 1 && (
                     <div className="mb-4 p-3 bg-muted/50 rounded-lg">
@@ -324,12 +339,14 @@ export function FloatingChatbot() {
                 <form onSubmit={handleSubmit} className="p-4 border-t">
                   <div className="flex gap-2 mb-3">
                     <Input
+                      ref={inputRef}
                       type="text"
                       placeholder="Type your question..."
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       disabled={isLoading}
-                      className="flex-1"
+                      className="flex-1 focus-visible:ring-2 focus-visible:ring-primary"
+                      aria-label="Type your question"
                     />
                     <Button
                       type="submit"
