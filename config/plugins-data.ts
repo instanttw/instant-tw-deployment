@@ -819,7 +819,7 @@ export const allPlugins: Plugin[] = [
     icon: "/plugins/duplicator-icon.svg",
     category: "Productivity",
     productUrl: "https://wp.instant.tw/plugins/instant-duplicator/",
-    freeDownloadUrl: "https://drive.google.com/file/d/1iDuP_instant-duplicator-free/view",
+    freeDownloadUrl: "https://tinyurl.com/instant-duplicator",
     rating: 4.9,
     totalReviews: 3250,
     installations: 650000,

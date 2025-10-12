@@ -4,7 +4,7 @@ import { Plugin } from "@/types";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, Download, ArrowRight } from "lucide-react";
+import { Star, Download, ArrowRight, Loader2 } from "lucide-react";
 import { formatNumber, formatPrice } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -31,8 +31,43 @@ const mockT = (key: string) => {
 
 export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { symbol } = useCurrency();
   const t = mockT; // Use mock translations
+
+  // Handle auto-download for specific plugins
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (plugin.slug === 'instant-duplicator') {
+      setIsDownloading(true);
+      
+      try {
+        // Create a temporary link for download
+        const link = document.createElement('a');
+        link.href = plugin.freeDownloadUrl || '#';
+        link.download = 'instant-duplicator.zip';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Optional: Track download event
+        console.log('Instant Duplicator download initiated');
+      } catch (error) {
+        console.error('Download failed:', error);
+        // Fallback: open in new tab
+        window.open(plugin.freeDownloadUrl, '_blank');
+      } finally {
+        setIsDownloading(false);
+      }
+    } else {
+      // For other plugins, use default behavior
+      window.open(plugin.freeDownloadUrl, '_blank');
+    }
+  };
   
   const lowestPrice = plugin.pricing.free 
     ? 0 
@@ -130,15 +165,23 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
           <div className="flex flex-col gap-2 w-full">
             {/* Download Free Button */}
             {plugin.freeDownloadUrl && (
-              <Button asChild variant="outline" className="w-full">
-                <a 
-                  href={plugin.freeDownloadUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Free
-                </a>
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={handleDownload}
+                disabled={isDownloading}
+              >
+                {isDownloading && plugin.slug === 'instant-duplicator' ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Downloading...
+                  </>
+                ) : (
+                  <>
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Free
+                  </>
+                )}
               </Button>
             )}
             {/* Buy Pro Button */}

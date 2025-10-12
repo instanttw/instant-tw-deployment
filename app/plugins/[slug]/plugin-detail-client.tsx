@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Star, Download, Check, ShoppingCart } from "lucide-react";
+import { Star, Download, Check, ShoppingCart, Loader2 } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import { generateProductSchema } from "@/lib/structured-data";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCurrency } from "@/lib/currency-context";
 import { UnifiedCheckoutButton } from "@/components/UnifiedCheckoutButton";
+import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 interface PluginDetailClientProps {
   plugin: Plugin;
@@ -20,7 +23,42 @@ interface PluginDetailClientProps {
 export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
   const schema = generateProductSchema(plugin);
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
+  const [isDownloading, setIsDownloading] = useState(false);
   const { formatPrice } = useCurrency();
+
+  // Handle auto-download for specific plugins
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (plugin.slug === 'instant-duplicator') {
+      setIsDownloading(true);
+      
+      try {
+        // Create a temporary link for download
+        const link = document.createElement('a');
+        link.href = plugin.freeDownloadUrl || '#';
+        link.download = 'instant-duplicator.zip';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Optional: Track download event
+        console.log('Instant Duplicator download initiated');
+      } catch (error) {
+        console.error('Download failed:', error);
+        // Fallback: open in new tab
+        window.open(plugin.freeDownloadUrl, '_blank');
+      } finally {
+        setIsDownloading(false);
+      }
+    } else {
+      // For other plugins, use default behavior
+      window.open(plugin.freeDownloadUrl, '_blank');
+    }
+  };
 
   const tiers = [
     { key: "free", name: "Free", data: plugin.pricing.free },
@@ -29,15 +67,34 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
     { key: "enterprise", name: "Enterprise", data: plugin.pricing.enterprise },
   ].filter((tier) => tier.data !== undefined);
 
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: 'Plugins', url: '/plugins' },
+    { name: plugin.name, url: `/plugins/${plugin.slug}` },
+  ];
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
+      <BreadcrumbSchema items={breadcrumbs} />
       <div className="min-h-screen">
       <div className="bg-secondary/30 py-12 mb-12">
         <div className="container mx-auto px-4">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6">
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Home
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link href="/plugins" className="hover:text-foreground transition-colors">
+              Plugins
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-foreground font-medium">{plugin.name}</span>
+          </nav>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="flex items-start gap-4 mb-6">
@@ -82,6 +139,107 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
               <div className="prose max-w-none">
                 <h2 className="text-2xl font-bold mb-4">About This Plugin</h2>
                 <p className="text-muted-foreground leading-relaxed">{plugin.description}</p>
+                
+                {/* Competitor Comparison Section */}
+                {plugin.slug === 'instant-seo' && (
+                  <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-primary/20">
+                    <h3 className="text-lg font-semibold mb-2">Why Choose Instant SEO Over Yoast SEO or Rank Math?</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>AI-Powered Optimization:</strong> Unlike Yoast SEO, we use AI to analyze and optimize your content automatically</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Built-in Rank Tracking:</strong> Track keyword rankings without needing external tools (not available in Yoast or Rank Math free versions)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Better Performance:</strong> Lighter and faster than Yoast SEO Premium with all features included</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                
+                {plugin.slug === 'instant-cache' && (
+                  <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-primary/20">
+                    <h3 className="text-lg font-semibold mb-2">Why Choose Instant Cache Over WP Rocket?</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Better Value:</strong> All WP Rocket features at a lower price with more optimization options</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Advanced Database Optimization:</strong> More comprehensive than WP Rocket's basic cleanup</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Free Version Available:</strong> Try core features free (WP Rocket has no free version)</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                
+                {plugin.slug === 'instant-forms' && (
+                  <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-primary/20">
+                    <h3 className="text-lg font-semibold mb-2">Why Choose Instant Forms Over Contact Form 7 or WPForms?</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Better Than Contact Form 7:</strong> Modern drag-and-drop builder (CF7 requires shortcodes)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>More Features Than WPForms:</strong> Built-in spam protection, conditional logic, and multi-page forms in free version</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>AI Form Builder:</strong> Generate complete forms from descriptions (unique feature)</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                
+                {plugin.slug === 'instant-security-guard' && (
+                  <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-primary/20">
+                    <h3 className="text-lg font-semibold mb-2">Why Choose Instant Security Over Wordfence or Sucuri?</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>AI Threat Detection:</strong> Advanced AI identifies threats Wordfence misses</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Better Performance:</strong> Lighter than Wordfence (no slow background scans)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>More Affordable:</strong> Enterprise features at fraction of Sucuri's cost</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                
+                {plugin.slug === 'instant-backup' && (
+                  <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-primary/20">
+                    <h3 className="text-lg font-semibold mb-2">Why Choose Instant Backup Over UpdraftPlus or BackupBuddy?</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Faster Backups:</strong> Incremental backups are faster than UpdraftPlus full backups</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>More Storage Options:</strong> Free cloud storage included (UpdraftPlus charges extra)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span><strong>Better Value:</strong> All BackupBuddy features at lower price</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -97,16 +255,20 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                       className="w-full" 
                       size="lg"
                       variant="outline"
-                      asChild
+                      onClick={handleDownload}
+                      disabled={isDownloading}
                     >
-                      <a 
-                        href={plugin.freeDownloadUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <Download className="mr-2 h-5 w-5" />
-                        Download Free
-                      </a>
+                      {isDownloading && plugin.slug === 'instant-duplicator' ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Downloading...
+                        </>
+                      ) : (
+                        <>
+                          <Download className="mr-2 h-5 w-5" />
+                          Download Free
+                        </>
+                      )}
                     </Button>
                   )}
                   {/* Buy Pro Button - Shown if Pro pricing exists */}
@@ -185,15 +347,17 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                       <Button
                         className="w-full h-11 mb-4"
                         variant="outline"
-                        asChild
+                        onClick={handleDownload}
+                        disabled={isDownloading}
                       >
-                        <a 
-                          href={plugin.freeDownloadUrl || "#"} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                        >
-                          Download Free
-                        </a>
+                        {isDownloading && plugin.slug === 'instant-duplicator' ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Downloading...
+                          </>
+                        ) : (
+                          "Download Free"
+                        )}
                       </Button>
                     ) : (
                       <UnifiedCheckoutButton
