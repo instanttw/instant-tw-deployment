@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${plugin.name} - WordPress ${plugin.category} Plugin`,
       description: `${plugin.tagline} - Better alternative to ${competitors[0] || 'other plugins'}`,
-      type: 'product',
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',

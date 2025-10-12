@@ -216,7 +216,7 @@ export function generateProductSEO(
     `/plugins/${slug}`,
     {
       openGraph: {
-        type: 'product',
+        type: 'website',
         url: `${SEO_CONFIG.siteUrl}/plugins/${slug}`,
         title: `${name} - Premium WordPress Plugin`,
         description,
