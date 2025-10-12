@@ -124,7 +124,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
+    // Provide a safe fallback during hydration instead of throwing
+    return {
+      items: [],
+      addItem: () => {},
+      removeItem: () => {},
+      updateQuantity: () => {},
+      clearCart: () => {},
+      getTotalItems: () => 0,
+      getTotalPrice: () => 0,
+      isOpen: false,
+      openCart: () => {},
+      closeCart: () => {},
+      toggleCart: () => {},
+    };
   }
   return context;
 }
