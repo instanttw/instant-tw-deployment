@@ -116,7 +116,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
                 <div>
                   <span className="text-xl font-bold">{t("free")}</span>
                   <p className="text-xs text-muted-foreground">
-                    proFrom {symbol}{plugin.pricing.pro?.price}/perYear
+                    pro from {symbol}{plugin.pricing.pro?.price}/per year
                   </p>
                 </div>
               ) : (
@@ -137,7 +137,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
                   rel="noopener noreferrer"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  downloadFree
+                  Download Free
                 </a>
               </Button>
             )}
@@ -149,7 +149,7 @@ export function PluginCard({ plugin, index = 0 }: PluginCardProps) {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  getPro
+                  Get Pro
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
