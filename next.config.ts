@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   // No output: 'export' for dash.instant.tw (needs dynamic features)
   // Only add output: 'export' when building for wp.instant.tw static site
   
+  // Enable React Strict Mode for better error messages
+  reactStrictMode: true,
+  
   typescript: {
     // Skip type checking during build (types will be checked in development)
     ignoreBuildErrors: true,
@@ -12,6 +15,13 @@ const nextConfig: NextConfig = {
   eslint: {
     // Skip ESLint during build (will run in development)
     ignoreDuringBuilds: true,
+  },
+  
+  // Enable logging to see more details in development
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
   
   images: {

@@ -68,7 +68,14 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 export function useCurrency() {
   const context = useContext(CurrencyContext);
   if (context === undefined) {
-    throw new Error("useCurrency must be used within a CurrencyProvider");
+    // Provide a safe fallback during hydration instead of throwing
+    // This prevents "Something went wrong" errors during initial render
+    return {
+      currency: "USD" as Currency,
+      setCurrency: () => {},
+      formatPrice: (price: number) => `$${price.toFixed(2)}`,
+      symbol: "$",
+    };
   }
   return context;
 }
