@@ -3001,7 +3001,7 @@ export const allPlugins: Plugin[] = [
     icon: "/plugins/popup-icon.svg",
     category: "Marketing",
     productUrl: "https://wp.instant.tw/plugins/instant-popup-master/",
-    freeDownloadUrl: "https://drive.google.com/file/d/1iPop_instant-popup-master-free/view",
+    freeDownloadUrl: "https://tinyurl.com/instant-popup-master",
     rating: 4.9,
     totalReviews: 6240,
     installations: 512000,

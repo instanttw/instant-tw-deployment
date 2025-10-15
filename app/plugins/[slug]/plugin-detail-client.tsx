@@ -29,34 +29,41 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
   // Handle auto-download for specific plugins
   const handleDownload = async (e: React.MouseEvent) => {
     e.preventDefault();
-    
-    if (plugin.slug === 'instant-duplicator') {
+
+    const autoDownloadSlugs = new Set(['instant-duplicator', 'instant-popup-master']);
+
+    if (autoDownloadSlugs.has(plugin.slug)) {
       setIsDownloading(true);
-      
+
       try {
         // Create a temporary link for download
         const link = document.createElement('a');
         link.href = plugin.freeDownloadUrl || '#';
-        link.download = 'instant-duplicator.zip';
+        const filename = plugin.slug === 'instant-duplicator' 
+          ? 'instant-duplicator.zip' 
+          : plugin.slug === 'instant-popup-master' 
+            ? 'instant-popup-master.zip' 
+            : 'download.zip';
+        link.download = filename;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
-        
+
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
+
         // Optional: Track download event
-        console.log('Instant Duplicator download initiated');
+        console.log(`${plugin.name} download initiated`);
       } catch (error) {
         console.error('Download failed:', error);
         // Fallback: open in new tab
-        window.open(plugin.freeDownloadUrl, '_blank');
+        if (plugin.freeDownloadUrl) window.open(plugin.freeDownloadUrl, '_blank');
       } finally {
         setIsDownloading(false);
       }
     } else {
       // For other plugins, use default behavior
-      window.open(plugin.freeDownloadUrl, '_blank');
+      if (plugin.freeDownloadUrl) window.open(plugin.freeDownloadUrl, '_blank');
     }
   };
 
@@ -258,7 +265,7 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                       onClick={handleDownload}
                       disabled={isDownloading}
                     >
-                      {isDownloading && plugin.slug === 'instant-duplicator' ? (
+                      {isDownloading ? (
                         <>
                           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                           Downloading...
@@ -350,7 +357,7 @@ export function PluginDetailClient({ plugin }: PluginDetailClientProps) {
                         onClick={handleDownload}
                         disabled={isDownloading}
                       >
-                        {isDownloading && plugin.slug === 'instant-duplicator' ? (
+                        {isDownloading ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             Downloading...
